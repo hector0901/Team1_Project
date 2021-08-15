@@ -133,7 +133,7 @@ public class MemberList extends JFrame {
       
        
        
-       
+        
        
        //좌측 상단 정보 입출력란
        
