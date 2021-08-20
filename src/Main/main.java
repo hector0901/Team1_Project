@@ -1,9 +1,8 @@
 package Main;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -11,12 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.Member;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,703 +26,1177 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import Beans.AdminVO;
 import Beans.MemberVO;
 import DB_Tool.DBClose;
 import DB_Tool.DBOpen;
+import Member.MemberList;
+import Member.My;
+import Notice.Notice;
+import Notice.Notice_customer;
+import Product.GucciProduct;
+import Product.GucciProduct2;
+import Product.GucciProduct3;
+import Product.PradaProduct;
+import Product.PradaProduct2;
+import Product.PradaProduct3;
 
 public class main extends JFrame {
 
-	MemberVO memberVO = new MemberVO();
-	AdminVO adminVO = new AdminVO();
+  MemberVO memberVO = new MemberVO();
 
-	JFrame loginf = new JFrame();
+  AdminVO adminVO = new AdminVO();
 
-	Connection con = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	StringBuffer sql = null;
+  JFrame loginf = new JFrame();
 
-	DBOpen dbopen = null;
-	DBClose dbclose = null;
+  Connection con = null;
+  PreparedStatement pstmt = null;
+  ResultSet rs = null;
+  StringBuffer sql = null;
 
-	JTextField id = new JTextField(200);
-	JPasswordField pw = new JPasswordField(200);
-	JTextField name = new JTextField(200);
-	JTextField phonenum = new JTextField(200);
-	JTextField address = new JTextField(200);
+  DBOpen dbopen = null;
+  DBClose dbclose = null;
 
-	// ·Î±×ÀÎ ¶óº§
-	JLabel login;
+  JTextField id = new JTextField(200);
+  JPasswordField pw = new JPasswordField(200);
+  JTextField name = new JTextField(200);
+  JTextField phonenum = new JTextField(200);
+  JTextField address = new JTextField(200);
 
-	// °øÁö»çÇ× ¶óº§
-	JLabel notice;
+  // ë¡œê·¸ì¸ ë¼ë²¨
+  JLabel login = new JLabel();
 
-	// ¸¶ÀÌÆäÀÌÁö ¶óº§
-	JLabel mypage;
+  // ê³µì§€ì‚¬í•­ ë¼ë²¨
+  JLabel notice;
 
-	// ¸ŞÀÎ ÄÁÅ×ÀÌ³Ê
-	Container c;
+  // ë§ˆì´í˜ì´ì§€ ë¼ë²¨
+  JLabel mypage;
 
-	// ¸ŞÀÎÈ­¸é ¸Ç À§ ÆĞ³Î
-	JPanel up;
+  // ë©”ì¸ ì»¨í…Œì´ë„ˆ
+  Container c;
 
-	// °ü¸®ÀÚ ¸Ş´º¹Ù
-	JMenuBar menu = new JMenuBar();
-	JMenu menu1 = new JMenu("È¸¿ø°ü¸®");
-	JMenu menu2 = new JMenu("°øÁö»çÇ×");
-	JMenuItem item = new JMenuItem("È¸¿ø¸ñ·Ï");
+  // ë©”ì¸í™”ë©´ ë§¨ ìœ„ íŒ¨ë„
+  JPanel up;
 
-	// È¸¿ø¸ñ·Ï Á¶È¸
-	MemberList memberlist = new MemberList();
+  // ê´€ë¦¬ì ë©”ë‰´ë°”
+  JMenuBar menu = new JMenuBar();
+  JMenu menu1 = new JMenu("íšŒì›ê´€ë¦¬");
+  JMenu menu2 = new JMenu("ê³µì§€ì‚¬í•­");
+  JMenuItem item = new JMenuItem("íšŒì›ëª©ë¡");
+  JMenuItem item2 = new JMenuItem("ê³µì§€ì‚¬í•­");
 
-	main() {
+  // íšŒì›ëª©ë¡ ì¡°íšŒ
+  MemberList memberlist = new MemberList();
 
-		dbopen = new DBOpen();
-		dbclose = new DBClose();
+  // ì•„ì´ë”” íŒ¨ìŠ¤ì›Œë“œ ì°¾ê¸°
+  JTextField namefield = new JTextField();
+  JTextField telfield = new JTextField();
 
-		// ¸ŞÀÎ È­¸é ±¸Çö
-		c = getContentPane();
+  // êµ¬ì°Œ ìƒí’ˆ í˜ì´ì§€
+  GucciProduct gucciproduct1 = new GucciProduct();
+  GucciProduct2 gucciproduct2 = new GucciProduct2();
+  GucciProduct3 gucciproduct3 = new GucciProduct3();
 
-		c.setLayout(null);
+  // í”„ë¼ë‹¤ ìƒí’ˆ í˜ì´ì§€
+  PradaProduct pradaproduct1 = new PradaProduct();
+  PradaProduct2 pradaproduct2 = new PradaProduct2();
+  PradaProduct3 pradaproduct3 = new PradaProduct3();
 
-		this.setResizable(false);
+  // ë§ˆì´í˜ì´ì§€
+  My my = new My();
 
-		setLocationRelativeTo(null);
+  // ê³µì§€ì‚¬í•­
+  Notice_customer notice_customer = new Notice_customer();
+  Notice notice_function = new Notice();
 
-		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+  main() {
 
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
+    dbopen = new DBOpen();
+    dbclose = new DBClose();
 
-		Image img = toolkit.getImage("");
+    // ë©”ì¸ í™”ë©´ êµ¬í˜„
+    c = getContentPane();
 
-		setIconImage(img);
+    c.setLayout(null);
 
-		// ¸Ş´º¹Ù
-		menu.add(menu1);
-		menu.add(menu2);
-		menu1.add(item);
-		setJMenuBar(menu);
-		menu.setVisible(false);
-		memberlist.setVisible(false);
+    this.setResizable(false);
 
-		// °¡Àå À§¿¡ À§Ä¡ÇÒ ÆĞ³Î »ı¼º
-		up = new JPanel();
+    setLocationRelativeTo(null);
 
-		up.setBounds(0, 0, 1800, 50);
+    setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
-		c.add(up);
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-		up.setLayout(null);
+    Image img = toolkit.getImage("");
 
-		up.setBackground(Color.black);
+    setIconImage(img);
 
-		JLabel label = new JLabel("TITLE");
+    // ë©”ë‰´ë°”
+    menu.add(menu1);
+    menu.add(menu2);
+    menu1.add(item);
+    menu2.add(item2);
+    setJMenuBar(menu);
+    menu.setVisible(false);
+    memberlist.setVisible(false);
 
-		Font font = new Font("Nixie One", Font.BOLD, 30);
+    // êµ¬ì°Œ ìƒí’ˆ í˜ì´ì§€
+    gucciproduct1.setVisible(false);
+    gucciproduct2.setVisible(false);
+    gucciproduct3.setVisible(false);
 
-		label.setFont(font);
+    // í”„ë¼ë‹¤ ìƒí’ˆ í˜ì´ì§€
+    pradaproduct1.setVisible(false);
+    pradaproduct2.setVisible(false);
+    pradaproduct3.setVisible(false);
 
-		label.setForeground(Color.white);
+    // ë§ˆì´í˜ì´ì§€&ê³µì§€ì‚¬í•­
+    my.setVisible(false);
+    notice_customer.setVisible(false);
 
-		up.add(label);
+    // ê°€ì¥ ìœ„ì— ìœ„ì¹˜í•  íŒ¨ë„ ìƒì„±
+    up = new JPanel();
 
-		label.setBounds(820, 0, 120, 50);
+    up.setBounds(0, 0, 1800, 50);
 
-		// ·Î±×ÀÎ ¹öÆ° »ı¼º
-		login = new JLabel("LOGIN");
+    c.add(up);
 
-		login.setForeground(Color.white);
+    up.setLayout(null);
 
-		up.add(login);
+    up.setBackground(Color.black);
 
-		login.setBounds(1660, 10, 85, 30);
+    JLabel label = new JLabel("TITLE");
 
-		// ·Î±×ÀÎÃ¢ »ı¼º
-		login.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				Container c = loginf.getContentPane();
+    Font font = new Font("Nixie One", Font.BOLD, 30);
 
-				c.setBackground(Color.white);
+    label.setFont(font);
 
-				loginf.setLayout(null);
+    label.setForeground(Color.white);
 
-				loginf.setLocationRelativeTo(null);
+    up.add(label);
 
-				loginf.setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+    label.setBounds(820, 0, 120, 50);
 
-				ImageIcon image = new ImageIcon(".//image//loginimage.png");
+    // ë¡œê·¸ì¸ ë²„íŠ¼ ìƒì„±
+    // login=new JLabel("LOGIN");
+    login = new JLabel("LOGIN");
 
-				JLabel imagelabel = new JLabel(image);
+    login.setForeground(Color.white);
 
-				loginf.add(imagelabel);
+    up.add(login);
 
-				imagelabel.setBounds(200, 50, 1319, 222);
+    login.setBounds(1660, 10, 85, 30);
 
-				// ·Î±×ÀÎ
-				JPanel panel1 = new JPanel();
+    // ë¡œê·¸ì¸ì°½ ìƒì„±
+    login.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent e) {
+        Container c = loginf.getContentPane();
 
-				panel1.setLayout(null);
+        c.setBackground(Color.white);
 
-				panel1.setBackground(Color.white);
+        loginf.setLayout(null);
 
-				panel1.setBounds(400, 300, 350, 600);
+        loginf.setLocationRelativeTo(null);
 
-				JLabel label = new JLabel("·Î±×ÀÎ");
+        loginf.setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
-				Font font = new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 20);
+        ImageIcon image = new ImageIcon(".//image//loginimage.png");
 
-				label.setFont(font);
+        JLabel imagelabel = new JLabel(image);
 
-				label.setBounds(140, 25, 70, 70);
+        loginf.add(imagelabel);
 
-				panel1.add(label);
+        imagelabel.setBounds(200, 50, 1319, 222);
 
-				JLabel idlabel = new JLabel("¾ÆÀÌµğ");
+        // ë¡œê·¸ì¸
+        JPanel panel1 = new JPanel();
 
-				Font font1 = new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 15);
+        panel1.setLayout(null);
 
-				idlabel.setFont(font1);
+        panel1.setBackground(Color.white);
 
-				idlabel.setBounds(25, 100, 60, 60);
+        panel1.setBounds(400, 300, 350, 600);
 
-				panel1.add(idlabel);
+        JLabel label = new JLabel("ë¡œê·¸ì¸");
 
-				JTextField idtxt = new JTextField(29);
+        Font font = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.BOLD, 20);
 
-				idtxt.setBounds(87, 115, 183, 30);
+        label.setFont(font);
 
-				panel1.add(idtxt);
+        label.setBounds(140, 25, 70, 70);
 
-				JLabel pwlabel = new JLabel("ºñ¹Ğ¹øÈ£");
+        panel1.add(label);
 
-				pwlabel.setFont(font1);
+        JLabel idlabel = new JLabel("ì•„ì´ë””");
 
-				pwlabel.setBounds(15, 165, 70, 60);
+        Font font1 = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.PLAIN, 15);
 
-				panel1.add(pwlabel);
+        idlabel.setFont(font1);
 
-				JPasswordField pwtxt = new JPasswordField(28);
+        idlabel.setBounds(25, 100, 60, 60);
 
-				pwtxt.setBounds(90, 181, 183, 30);
+        panel1.add(idlabel);
 
-				panel1.add(pwtxt);
+        JTextField idtxt = new JTextField(29);
 
-				JLabel notice1 = new JLabel("º» »çÀÌÆ®´Â reCAPTCHA¿¡ ÀÇÇØ º¸È£µÇ¸ç");
+        idtxt.setBounds(87, 115, 183, 30);
 
-				Font font3 = new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 13);
+        panel1.add(idtxt);
 
-				notice1.setFont(font3);
+        JLabel pwlabel = new JLabel("ë¹„ë°€ë²ˆí˜¸");
 
-				notice1.setBounds(45, 230, 450, 40);
+        pwlabel.setFont(font1);
 
-				panel1.add(notice1);
+        pwlabel.setBounds(15, 165, 70, 60);
 
-				JLabel notice2 = new JLabel("Google °³ÀÎÁ¤º¸Ãë±Ş¹æÄ§ ¹× ¼­ºñ½º ¾à°üÀÌ Àû¿ëµË´Ï´Ù.");
+        panel1.add(pwlabel);
 
-				notice2.setFont(font3);
+        JPasswordField pwtxt = new JPasswordField(28);
 
-				notice2.setBounds(8, 250, 450, 40);
+        pwtxt.setBounds(90, 181, 183, 30);
 
-				panel1.add(notice2);
+        panel1.add(pwtxt);
 
-				// ·Î±×ÀÎ ¹öÆ° »ı¼º
-				ImageIcon nextI = new ImageIcon(".//image//loginb.png");
+        JLabel notice1 = new JLabel("ë³¸ ì‚¬ì´íŠ¸ëŠ” reCAPTCHAì— ì˜í•´ ë³´í˜¸ë˜ë©°");
 
-				Image nextI2 = nextI.getImage();
+        Font font3 = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.PLAIN, 13);
 
-				Image next1 = nextI2.getScaledInstance(150, 40, Image.SCALE_SMOOTH);
+        notice1.setFont(font3);
 
-				ImageIcon nextI3 = new ImageIcon(next1);
+        notice1.setBounds(45, 230, 450, 40);
 
-				JButton login = new JButton(nextI3);
+        panel1.add(notice1);
 
-				login.setBounds(93, 310, 150, 40);
+        JLabel notice2 = new JLabel("Google ê°œì¸ì •ë³´ì·¨ê¸‰ë°©ì¹¨ ë° ì„œë¹„ìŠ¤ ì•½ê´€ì´ ì ìš©ë©ë‹ˆë‹¤.");
 
-				panel1.add(login);
+        notice2.setFont(font3);
 
-				// È¸¿ø&°ü¸®ÀÚ ·Î±×ÀÎ
-				login.addMouseListener(new MouseAdapter() {
+        notice2.setBounds(8, 250, 450, 40);
 
-					public void mouseClicked(MouseEvent e) {
-						// TODO Auto-generated method stub
+        panel1.add(notice2);
 
-						AdminVO adminVO = new AdminVO();
+        // ë¡œê·¸ì¸ ë²„íŠ¼ ìƒì„±
+        ImageIcon nextI = new ImageIcon(".//image//loginb.png");
 
-						MemberVO memberVO = new MemberVO();
+        Image nextI2 = nextI.getImage();
 
-						String check_id = idtxt.getText().trim();
-						String check_pw = pwtxt.getText().trim();
+        Image next1 = nextI2.getScaledInstance(150, 40, Image.SCALE_SMOOTH);
 
-						boolean member_login = Member_Login(check_id, check_pw);
-						boolean admin_login = Admin_Login(check_id, check_pw);
+        ImageIcon nextI3 = new ImageIcon(next1);
 
-						if (check_id.length() == 0 || check_pw.length() == 0) {
-							JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ ¶Ç´Â ºñ¹Ğ¹øÈ£°¡ ÀÔ·ÂµÇÁö ¾Ê¾Ò½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØ ÁÖ¼¼¿ä.", "·Î±×ÀÎ ¿À·ù",
-									JOptionPane.WARNING_MESSAGE);
-							return;
-						}
+        JButton loginbutton = new JButton(nextI3);
 
-						else if (member_login == true) {
-							JOptionPane.showMessageDialog(null, "È¸¿øÀ¸·Î ·Î±×ÀÎ µÇ¾ú½À´Ï´Ù.", "·Î±×ÀÎ ¼º°ø", JOptionPane.DEFAULT_OPTION);
+        loginbutton.setBounds(93, 310, 150, 40);
 
-							loginf.setVisible(false);
+        panel1.add(loginbutton);
 
-						}
+        // íšŒì›&ê´€ë¦¬ì ë¡œê·¸ì¸
+        loginbutton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            AdminVO adminVO = new AdminVO();
 
-						else if (admin_login == true) {
-							JOptionPane.showMessageDialog(null, "°ü¸®ÀÚ·Î ·Î±×ÀÎ µÇ¾ú½À´Ï´Ù.", "·Î±×ÀÎ ¼º°ø", JOptionPane.DEFAULT_OPTION);
+            MemberVO memberVO = new MemberVO();
 
-							loginf.setVisible(false);
-							menu.setVisible(true);
+            String check_id = idtxt.getText().trim();
+            String check_pw = pwtxt.getText().trim();
 
-							item.addActionListener(new ActionListener() {
-								public void actionPerformed(ActionEvent e) {
-									memberlist.setVisible(true);
-								}
-							});
-						}
+            boolean member_login = Member_Login(check_id, check_pw);
 
-						else {
-							JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ°¡ Á¸ÀçÇÏÁö ¾Ê°Å³ª ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.", "·Î±×ÀÎ ¿À·ù",
-									JOptionPane.WARNING_MESSAGE);
-						}
-					}
-				});
+            boolean admin_login = Admin_Login(check_id, check_pw);
 
-				// ¾ÆÀÌµğ Ã£±â ·¹ÀÌºí
-				JLabel findid = new JLabel("¾ÆÀÌµğ Ã£±â /");
+            if (check_id.length() == 0 || check_pw.length() == 0) {
+              JOptionPane.showMessageDialog(null, "ì•„ì´ë”” ë˜ëŠ” ë¹„ë°€ë²ˆí˜¸ê°€ ì…ë ¥ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ ì£¼ì„¸ìš”.", "ë¡œê·¸ì¸ ì˜¤ë¥˜",
+                  JOptionPane.WARNING_MESSAGE);
+              return;
+            }
 
-				Font font2 = new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 15);
+            else if (member_login == true) {
+              JOptionPane.showMessageDialog(null, "íšŒì›ìœ¼ë¡œ ë¡œê·¸ì¸ ë˜ì—ˆìŠµë‹ˆë‹¤.", "ë¡œê·¸ì¸ ì„±ê³µ", JOptionPane.DEFAULT_OPTION);
 
-				findid.setFont(font2);
+              loginf.setVisible(false);
 
-				findid.setBounds(68, 395, 100, 30);
+              mypage.setForeground(Color.white);
 
-				panel1.add(findid);
+              // ë¡œê·¸ì•„ì›ƒ
+              login.setText("EXIT");
 
-				// ºñ¹Ğ¹øÈ£ Ã£±â ·¹ÀÌºí
-				JLabel findpw = new JLabel("ºñ¹Ğ¹øÈ£ Ã£±â");
+              login.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                  System.exit(0);
+                }
+              });
 
-				findpw.setFont(font2);
+            }
 
-				findpw.setBounds(168, 395, 100, 30);
+            else if (admin_login == true) {
+              JOptionPane.showMessageDialog(null, "ê´€ë¦¬ìë¡œ ë¡œê·¸ì¸ ë˜ì—ˆìŠµë‹ˆë‹¤.", "ë¡œê·¸ì¸ ì„±ê³µ", JOptionPane.DEFAULT_OPTION);
 
-				panel1.add(findpw);
+              loginf.setVisible(false);
+              menu.setVisible(true);
 
-				c.add(panel1);
+              // ë¡œê·¸ì•„ì›ƒ
+              login.setText("EXIT");
 
-				// È¸¿ø °¡ÀÔ
-				JPanel panel2 = new JPanel();
+              login.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                  System.exit(0);
+                }
+              });
 
-				panel2.setLayout(null);
+              item.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  memberlist.setVisible(true);
+                }
+              });
 
-				panel2.setBackground(Color.white);
+              // ê´€ë¦¬ììš© ê³µì§€ì‚¬í•­
+              item2.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                  notice_function.setVisible(true);
+                }
+              });
+            }
 
-				panel2.setBounds(900, 300, 500, 1000);
+            else {
+              JOptionPane.showMessageDialog(null, "ì•„ì´ë””ê°€ ì¡´ì¬í•˜ì§€ ì•Šê±°ë‚˜ ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", "ë¡œê·¸ì¸ ì˜¤ë¥˜",
+                  JOptionPane.WARNING_MESSAGE);
+            }
 
-				JLabel label2 = new JLabel("°¡ÀÔÇÏ±â");
+          }
+        });
 
-				label2.setFont(font);
+        // ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ë ˆì´ë¸”
+        JLabel findid = new JLabel("ì•„ì´ë”” / ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°");
 
-				label2.setBounds(203, 23, 120, 70);
+        Font font2 = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.BOLD, 15);
 
-				panel2.add(label2);
+        findid.setFont(font2);
 
-				JLabel label3 = new JLabel("¸ğµç Ç×¸ñÀº ÇÊ¼ö ÀÔ·Â»çÇ×ÀÔ´Ï´Ù");
+        findid.setBounds(82, 395, 180, 30);
 
-				Font font4 = new Font("¸¼Àº °íµñ Semilight", Font.PLAIN, 12);
+        panel1.add(findid);
 
-				label3.setFont(font4);
+        c.add(panel1);
 
-				label3.setBounds(300, 50, 200, 70);
+        findid.addMouseListener(new MouseAdapter() {
+          public void mouseClicked(MouseEvent e) {
+            JFrame findidframe = new JFrame();
 
-				panel2.add(label3);
+            findidframe.setTitle("ì•„ì´ë””&ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°");
 
-				JLabel label4 = new JLabel("¾ÆÀÌµğ");
+            Container con = findidframe.getContentPane();
 
-				label4.setFont(font1);
+            con.setBackground(Color.white);
 
-				label4.setBounds(50, 80, 100, 70);
+            con.setLayout(null);
 
-				panel2.add(label4);
+            findidframe.setResizable(false);
 
-				id.setBounds(52, 140, 380, 30);
+            findidframe.setSize(500, 500);
 
-				panel2.add(id);
+            findidframe.setVisible(true);
 
-				JLabel label5 = new JLabel("ºñ¹Ğ¹øÈ£");
+            JPanel title = new JPanel();
 
-				label5.setFont(font1);
+            title.setLayout(null);
 
-				label5.setBounds(50, 160, 200, 70);
+            title.setBounds(0, 0, 500, 50);
 
-				panel2.add(label5);
+            title.setBackground(Color.black);
 
-				pw.setBounds(52, 220, 380, 30);
+            JLabel label = new JLabel("ì•„ì´ë”” & ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°");
 
-				panel2.add(pw);
+            Font font = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.BOLD, 14);
 
-				JLabel label6 = new JLabel("ÀÌ¸§");
+            label.setForeground(Color.white);
 
-				label6.setFont(font1);
+            label.setFont(font);
 
-				label6.setBounds(50, 240, 130, 70);
+            label.setBounds(170, 0, 160, 50);
 
-				panel2.add(label6);
+            title.add(label);
 
-				name.setBounds(52, 302, 380, 30);
+            findidframe.add(title);
 
-				panel2.add(name);
+            JLabel name = new JLabel("ì´ë¦„");
+            Font font2 = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.PLAIN, 18);
+            name.setFont(font2);
+            con.add(name);
+            name.setBounds(140, 100, 80, 50);
 
-				JLabel phone = new JLabel("ÀüÈ­¹øÈ£");
+            con.add(namefield);
+            namefield.setBounds(135, 155, 220, 30);
 
-				phone.setFont(font1);
+            JLabel tel = new JLabel("ì—°ë½ì²˜");
+            tel.setFont(font2);
+            con.add(tel);
+            tel.setBounds(140, 200, 80, 50);
 
-				phone.setBounds(50, 320, 130, 70);
+            con.add(telfield);
+            telfield.setBounds(135, 255, 220, 30);
 
-				panel2.add(phone);
+            ImageIcon findI = new ImageIcon(".//image//ì°¾ê¸°.png");
+            Image findI2 = findI.getImage();
+            Image find1 = findI2.getScaledInstance(60, 25, Image.SCALE_SMOOTH);
+            ImageIcon findI3 = new ImageIcon(find1);
+            JButton findbutton = new JButton(findI3);
+            con.add(findbutton);
+            findbutton.setBorderPainted(false);
+            findbutton.setContentAreaFilled(false);
+            findbutton.setFocusPainted(false);
+            findbutton.setBounds(210, 330, 60, 25);
 
-				phonenum.setBounds(52, 380, 380, 30);
+            findbutton.addActionListener(new ActionListener() {
+              public void actionPerformed(ActionEvent e) {
+                String check_name = namefield.getText().trim();
+                String check_tel = telfield.getText().trim();
+                find_id_pw(check_name, check_tel);
 
-				panel2.add(phonenum);
+              }
+            });
 
-				JLabel add = new JLabel("ÁÖ¼Ò");
+          }
+        });
 
-				add.setFont(font1);
+        // íšŒì› ê°€ì…
+        JPanel panel2 = new JPanel();
 
-				add.setBounds(50, 400, 130, 70);
+        panel2.setLayout(null);
 
-				panel2.add(add);
+        panel2.setBackground(Color.white);
 
-				address.setBounds(52, 460, 380, 30);
+        panel2.setBounds(900, 300, 500, 1000);
 
-				panel2.add(address);
+        JLabel label2 = new JLabel("ê°€ì…í•˜ê¸°");
 
-				// °¡ÀÔÇÏ±â ¹öÆ°
-				ImageIcon enterI = new ImageIcon(".//image//enter.png");
+        label2.setFont(font);
 
-				Image enterI2 = enterI.getImage();
+        label2.setBounds(203, 23, 120, 70);
 
-				Image enter1 = enterI2.getScaledInstance(130, 40, Image.SCALE_SMOOTH);
+        panel2.add(label2);
 
-				ImageIcon enterI3 = new ImageIcon(enter1);
+        JLabel label3 = new JLabel("ëª¨ë“  í•­ëª©ì€ í•„ìˆ˜ ì…ë ¥ì‚¬í•­ì…ë‹ˆë‹¤");
 
-				JButton enter = new JButton(enterI3);
+        Font font4 = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.PLAIN, 12);
 
-				enter.setBounds(178, 520, 130, 40);
+        label3.setFont(font4);
 
-				panel2.add(enter);
+        label3.setBounds(300, 50, 200, 70);
 
-				c.add(panel2);
+        panel2.add(label3);
 
-				enter.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						create(memberVO);
-						
-					}
+        JLabel label4 = new JLabel("ì•„ì´ë””");
 
-				});
+        label4.setFont(font1);
 
-				loginf.setVisible(true);
-			}
-		});
+        label4.setBounds(50, 80, 100, 70);
 
-		// °øÁö»çÇ× ¹öÆ° »ı¼º
-		notice = new JLabel("NOTICE");
+        panel2.add(label4);
 
-		notice.setForeground(Color.white);
+        id.setBounds(52, 140, 380, 30);
 
-		up.add(notice);
+        panel2.add(id);
 
-		notice.setBounds(1590, 10, 90, 30);
+        JLabel label5 = new JLabel("ë¹„ë°€ë²ˆí˜¸");
 
-		// ¸¶ÀÌÆäÀÌÁö ¹öÆ° »ı¼º
-		mypage = new JLabel("MY PAGE");
+        label5.setFont(font1);
 
-		mypage.setForeground(Color.white);
+        label5.setBounds(50, 160, 200, 70);
 
-		up.add(mypage);
+        panel2.add(label5);
 
-		mypage.setBounds(1510, 10, 250, 30);
+        pw.setBounds(52, 220, 380, 30);
 
-		// ºê·£µå ÀÌ¹ÌÁö
-		// Áß¾Ó¿¡ µé¾î°¥ ÆĞ³Î »ı¼º
-		JPanel center = new JPanel();
+        panel2.add(pw);
 
-		center.setBounds(0, 50, 1800, 1000);
+        JLabel label6 = new JLabel("ì´ë¦„");
 
-		c.add(center);
+        label6.setFont(font1);
 
-		center.setLayout(null);
+        label6.setBounds(50, 240, 130, 70);
 
-		center.setBackground(Color.white);
+        panel2.add(label6);
 
-		// ºê·£µå 1(Gucci)
-		ImageIcon gucciI = new ImageIcon(".//image//±¸Âî.png");
+        name.setBounds(52, 302, 380, 30);
 
-		Image gucciImage = gucciI.getImage();
+        panel2.add(name);
 
-		Image gucciImage2 = gucciImage.getScaledInstance(700, 500, Image.SCALE_SMOOTH);
+        JLabel phone = new JLabel("ì „í™”ë²ˆí˜¸");
 
-		ImageIcon gucciicon = new ImageIcon(gucciImage2);
+        phone.setFont(font1);
 
-		JLabel gucci = new JLabel(gucciicon);
+        phone.setBounds(50, 320, 130, 70);
 
-		center.add(gucci);
+        panel2.add(phone);
 
-		gucci.setBounds(520, 150, 700, 500);
+        phonenum.setBounds(52, 380, 380, 30);
 
-		// "´ÙÀ½" ¹öÆ°
-		ImageIcon next = new ImageIcon(".//image//´ÙÀ½.png");
+        panel2.add(phonenum);
 
-		Image nextImage = next.getImage();
+        JLabel add = new JLabel("ì£¼ì†Œ");
 
-		Image nextImage2 = nextImage.getScaledInstance(80, 70, Image.SCALE_SMOOTH);
+        add.setFont(font1);
 
-		ImageIcon nexticon = new ImageIcon(nextImage2);
+        add.setBounds(50, 400, 130, 70);
 
-		JButton nextbutton = new JButton(nexticon);
+        panel2.add(add);
 
-		nextbutton.setBorderPainted(false);
-		nextbutton.setContentAreaFilled(false);
-		nextbutton.setFocusPainted(false);
+        address.setBounds(52, 460, 380, 30);
 
-		center.add(nextbutton);
+        panel2.add(address);
 
-		nextbutton.setBounds(1300, 350, 80, 70);
+        // ê°€ì…í•˜ê¸° ë²„íŠ¼
+        ImageIcon enterI = new ImageIcon(".//image//enter.png");
 
-		nextbutton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+        Image enterI2 = enterI.getImage();
 
-				center.setVisible(false);
+        Image enter1 = enterI2.getScaledInstance(130, 40, Image.SCALE_SMOOTH);
 
-				JPanel center2 = new JPanel();
+        ImageIcon enterI3 = new ImageIcon(enter1);
 
-				center2.setBounds(0, 50, 1800, 1000);
+        JButton enter = new JButton(enterI3);
 
-				c.add(center2);
+        enter.setBounds(178, 520, 130, 40);
 
-				center2.setLayout(null);
+        panel2.add(enter);
 
-				center2.setBackground(Color.white);
+        c.add(panel2);
 
-				ImageIcon pradaI = new ImageIcon(".//image//ÇÁ¶ó´Ù.png");
+        enter.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            create(memberVO);
 
-				Image pradaImage = pradaI.getImage();
+          }
 
-				Image pradaImage2 = pradaImage.getScaledInstance(700, 500, Image.SCALE_SMOOTH);
+        });
 
-				ImageIcon pradaicon = new ImageIcon(pradaImage2);
+        loginf.setVisible(true);
+      }
+    });
 
-				JLabel prada = new JLabel(pradaicon);
+    // ê³µì§€ì‚¬í•­ ë²„íŠ¼ ìƒì„±
+    notice = new JLabel("NOTICE");
 
-				center2.add(prada);
+    notice.setForeground(Color.white);
 
-				prada.setBounds(520, 150, 700, 500);
+    up.add(notice);
 
-				ImageIcon backI = new ImageIcon(".//image//ÀÌÀü.png");
+    notice.setBounds(1590, 10, 90, 30);
 
-				Image backImage = backI.getImage();
+    notice.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent e) {
+        notice_customer.setVisible(true);
+      }
+    });
 
-				Image backImage2 = backImage.getScaledInstance(80, 70, Image.SCALE_SMOOTH);
+    // ë§ˆì´í˜ì´ì§€ ë²„íŠ¼ ìƒì„±
+    mypage = new JLabel("MY PAGE");
 
-				ImageIcon backicon = new ImageIcon(backImage2);
+    mypage.setForeground(Color.BLACK);
 
-				JButton backbutton = new JButton(backicon);
+    up.add(mypage);
 
-				backbutton.setBorderPainted(false);
-				backbutton.setContentAreaFilled(false);
-				backbutton.setFocusPainted(false);
+    mypage.setBounds(1510, 10, 250, 30);
 
-				center2.add(backbutton);
-				backbutton.setBounds(355, 350, 80, 70);
+    // ë§ˆì´í˜ì´ì§€ì°½
+    mypage.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent e) {
+        my.setVisible(true);
+      }
+    });
 
-				backbutton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
+    // ë¸Œëœë“œ ì´ë¯¸ì§€
+    // ì¤‘ì•™ì— ë“¤ì–´ê°ˆ íŒ¨ë„ ìƒì„±
+    JPanel center = new JPanel();
 
-						center2.setVisible(false);
+    center.setBounds(0, 50, 1800, 1000);
 
-						center.setVisible(true);
+    c.add(center);
 
-					}
-				});
+    center.setLayout(null);
 
-			}
-		});
+    center.setBackground(Color.white);
 
-		setVisible(true);
+    // ë¸Œëœë“œ 1(Gucci)
+    ImageIcon gucciI = new ImageIcon(".//image//êµ¬ì°Œ.png");
 
-	}
+    Image gucciImage = gucciI.getImage();
 
-	// 2. È¸¿ø ·Î±×ÀÎ
-	public boolean Member_Login(String member_id, String member_passwd) {
-		boolean sw = false;
-		int member_login_cnt = 0;
+    Image gucciImage2 = gucciImage.getScaledInstance(700, 500, Image.SCALE_SMOOTH);
 
-		try {
-			con = this.dbopen.getConnection();
+    ImageIcon gucciicon = new ImageIcon(gucciImage2);
 
-			sql = new StringBuffer();
-			sql.append(" SELECT COUNT(*) as member_login_cnt");
-			sql.append(" FROM member");
-			sql.append(" WHERE member_id=? AND member_passwd=?"); // ?´Â º¯¼öÀÇ °ªÀ¸·Î ´ëÃ¼µÊ
+    JLabel gucci = new JLabel(gucciicon);
 
-			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, member_id);
-			pstmt.setString(2, member_passwd);
-			rs = pstmt.executeQuery();
-			rs.next();
-			member_login_cnt = rs.getInt("member_login_cnt");
+    center.add(gucci);
 
-			if (member_login_cnt == 1) { // ÆĞ½º¿öµå ÀÏÄ¡
-				sw = true;
-			} else {
-				sw = false;
-			}
+    gucci.setBounds(520, 150, 700, 500);
 
-		} catch (SQLException e) {
-			System.out.println("SQL ¹®¹ı¿¡ ¹®Á¦°¡ ÀÖ´Â°Í °°½À´Ï´Ù.");
-			e.printStackTrace();
-		} finally {
-			this.dbclose.close(con, pstmt, rs);
-		}
+    // ë¸Œëœë“œ ì „ì²´ ìƒí’ˆ ì°½
+    gucci.addMouseListener(new MouseAdapter() {
+      public void mouseClicked(MouseEvent e) {
 
-		return sw;
-	}
+        JFrame gucciframe = new JFrame();
 
-	// 3. °ü¸®ÀÚ ·Î±×ÀÎ
-	public boolean Admin_Login(String admin_id, String admin_passwd) {
-		boolean sw = false;
-		int admin_login_cnt = 0;
+        gucciframe.setLayout(null);
 
-		try {
-			con = this.dbopen.getConnection();
+        gucciframe.setResizable(false);
 
-			sql = new StringBuffer();
-			sql.append(" SELECT COUNT(*) as admin_login_cnt");
-			sql.append(" FROM admin");
-			sql.append(" WHERE admin_id=? AND admin_passwd=?"); // ?´Â º¯¼öÀÇ °ªÀ¸·Î ´ëÃ¼µÊ
+        gucciframe.setLocationRelativeTo(null);
 
-			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, admin_id);
-			pstmt.setString(2, admin_passwd);
-			rs = pstmt.executeQuery();
-			rs.next();
-			admin_login_cnt = rs.getInt("admin_login_cnt");
+        gucciframe.setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
-			if (admin_login_cnt == 1) { // ÆĞ½º¿öµå ÀÏÄ¡
-				sw = true;
-			} else {
-				sw = false;
-			}
+        Container guccicon = gucciframe.getContentPane();
 
-		} catch (SQLException e) {
-			System.out.println("SQL ¹®¹ı¿¡ ¹®Á¦°¡ ÀÖ´Â°Í °°½À´Ï´Ù.");
-			e.printStackTrace();
-		} finally {
-			this.dbclose.close(con, pstmt, rs);
-		}
+        /*
+         * ImageIcon [] Gucci= { new ImageIcon(".//image//êµ¬ì°Œ ë¼ë²¨ ë””í…Œì¼ì˜ ìŠ¤ì›¨íŠ¸ì…”ì¸ .jpeg"), new
+         * ImageIcon(".//image//ì €ì§€ ì¡°ê¹… íŒ¬ì¸ .jpg"), new
+         * ImageIcon(".//image//êµ¬ì°Œ ë¡œê³  ë¡¸ì´í†¤ ë ˆë” ìŠ¤ë‹ˆì»¤ì¦ˆ.jpeg")};
+         * 
+         * JLabel GucciImage[]= { new JLabel(Gucci[0]), new JLabel(Gucci[1]), new
+         * JLabel(Gucci[2])};
+         */
 
-		return sw;
-	}
+        JPanel titlep = new JPanel();
 
-	// È¸¿ø °¡ÀÔ
-	public int create(MemberVO memberVO) {
-		int count = 0; // µî·ÏµÈ ·¹ÄÚµå °¹¼ö
+        guccicon.add(titlep);
 
-		try {
-			con = this.dbopen.getConnection();
+        titlep.setBounds(0, 0, 1800, 50);
 
-			sql = new StringBuffer();
-			sql.append(
-					"INSERT INTO member(member_no, member_id, member_passwd, member_name, member_tel, member_address, member_rdate)");
-			sql.append("VALUES (member_no_seq.nextval, ?, ?, ?, ?, ?, sysdate)"); // ?´Â º¯¼öÀÇ °ªÀ¸·Î ´ëÃ¼µÊ
+        titlep.setLayout(null);
 
-			// °¢ ÅØ½ºÆ®ÇÊµå¿¡ ÀÔ·ÂµÈ °ªÀ» º¯¼ö¿¡ ÀúÀå
-			String ID = id.getText().trim();
-			String PW = pw.getText().trim();
-			String NAME = name.getText().trim();
-			String PHONE = phonenum.getText().trim();
-			String ADDRESS = address.getText().trim();
+        titlep.setBackground(Color.black);
 
-			// º¯¼öº° À¯È¿¼º °Ë»ç
-			String regExp = "^[0-9]+$";
+        JLabel GucciLabel = new JLabel("GUCCI");
 
-			if (ID.length() < 6) {
-				JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ´Â 6±ÛÀÚ ÀÌ»ó ÀÔ·ÂÇØÁÖ¼¼¿ä");
-				id.setText("");
-			} else if (ID.length() >= 16) {
-				JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ´Â 16±ÛÀÚ ÀÌÇÏ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä");
-				id.setText("");
-			}
+        Font font = new Font("Nixie One", Font.BOLD, 30);
 
-			if (PW.length() < 8) {
-				JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£´Â 8±ÛÀÚ ÀÌ»ó ÀÔ·ÂÇØÁÖ¼¼¿ä");
-				pw.setText("");
-			} else if (PW.length() >= 16) {
-				JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£´Â 16±ÛÀÚ ÀÌÇÏ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä");
-				pw.setText("");
-			}
+        GucciLabel.setFont(font);
 
-			if (NAME.length() == 0) {
-				JOptionPane.showMessageDialog(null, "ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä");
-				name.setText("");
-			}
+        GucciLabel.setForeground(Color.white);
 
-			if (!(PHONE.length() == 10 || PHONE.length() == 11)) {
-				JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£´Â 10-11ÀÚ¸®¸¸ °¡´ÉÇÕ´Ï´Ù");
-				phonenum.setText("");
-			} else if (!(PHONE.matches(regExp))) {
-				JOptionPane.showMessageDialog(null, "ÀüÈ­¹øÈ£´Â ¼ıÀÚ¸¸ ÀÔ·ÂÇÒ ¼ö ÀÖ½À´Ï´Ù");
-				phonenum.setText("");
-			}
+        titlep.add(GucciLabel);
 
-			if (ADDRESS.length() == 0) {
-				JOptionPane.showMessageDialog(null, "ÁÖ¼Ò¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä");
-				address.setText("");
-			}
+        GucciLabel.setBounds(820, 0, 120, 50);
 
-			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, ID);
-			pstmt.setString(2, PW);
-			pstmt.setString(3, NAME);
-			pstmt.setString(4, PHONE);
-			pstmt.setString(5, ADDRESS);
+        JPanel gcenter = new JPanel();
 
-			if (ID.length() < 6 || ID.length() >= 16 || PW.length() >= 16 || PW.length() < 8 || NAME.length() == 0
-					|| !(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0) {
-				JOptionPane.showMessageDialog(null, "È¸¿ø°¡ÀÔ ½ÇÆĞ, ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä.");
-			} else {
-				count = pstmt.executeUpdate(); // SQL ½ÇÇà
+        gcenter.setBounds(0, 50, 1800, 1000);
 
-				JOptionPane.showMessageDialog(null, "È¸¿ø°¡ÀÔ ¿Ï·á");
+        gcenter.setLayout(null);
 
-				id.setText("");
-				pw.setText("");
-				name.setText("");
-				phonenum.setText("");
-				address.setText("");
-				id.setText("");
+        gcenter.setBackground(Color.white);
 
-			}
+        guccicon.add(gcenter);
 
-		} catch (Exception e1) {
-			System.out.println("SQL ¹®¹ı¿¡ ¹®Á¦°¡ ÀÖ´Â°Í °°½À´Ï´Ù.");
-			e1.printStackTrace();
-		} finally {
-			this.dbclose.close(con, pstmt);
-		}
+        ImageIcon gucciI1 = new ImageIcon(".//image//ì˜¤ë²„ì‚¬ì´ì¦ˆ ì¼€ì´ë¸” ë‹ˆíŠ¸ ê°€ë””ê±´.png");
 
-		return count;
+        ImageIcon gucciI2 = new ImageIcon(".//image//ìŠ¤í€˜ì–´ G ì²´í¬ íŠ¸ìœ„ë“œ ë“œë ˆìŠ¤.png");
 
-	}
+        ImageIcon gucciI3 = new ImageIcon(".//image//êµ¬ì°Œ ìŠ¤ëª° ë§ˆí‹€ë¼ì„¸ ìˆ„ë”ë°±.png");
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+        // ìƒí’ˆ 1
+        JLabel gucci1 = new JLabel(gucciI1);
 
-		new main();
-	}
+        JLabel gucci1name = new JLabel("ì˜¤ë²„ì‚¬ì´ì¦ˆ ì¼€ì´ë¸” ë‹ˆíŠ¸ ê°€ë””ê±´");
+
+        Font font5 = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.BOLD, 18);
+
+        gucci1name.setFont(font5);
+
+        gcenter.add(gucci1name);
+
+        gucci1name.setBounds(190, 750, 260, 30);
+
+        gcenter.add(gucci1);
+
+        gucci1.setBounds(120, 180, 400, 400);
+
+        // êµ¬ì°Œ ì²«ë²ˆì§¸ ìƒí’ˆ ìƒì„¸í˜ì´ì§€
+        gucci1.addMouseListener(new MouseAdapter() {
+          public void mouseClicked(MouseEvent e) {
+            gucciproduct1.setVisible(true);
+          }
+        });
+
+        // ìƒí’ˆ 2
+        JLabel gucci2 = new JLabel(gucciI2);
+
+        JLabel gucci2name = new JLabel("ìŠ¤í€˜ì–´ G ì²´í¬ íŠ¸ìœ„ë“œ ë“œë ˆìŠ¤");
+
+        gucci2name.setFont(font5);
+
+        gcenter.add(gucci2name);
+
+        gcenter.add(gucci2);
+
+        gucci2name.setBounds(738, 750, 260, 30);
+
+        gucci2.setBounds(670, 180, 400, 400);
+
+        // êµ¬ì°Œ ë‘ë²ˆì§¸ ìƒí’ˆ ìƒì„¸í˜ì´ì§€
+        gucci2.addMouseListener(new MouseAdapter() {
+          public void mouseClicked(MouseEvent e) {
+            gucciproduct2.setVisible(true);
+          }
+        });
+
+        // ìƒí’ˆ 3
+        JLabel gucci3 = new JLabel(gucciI3);
+
+        JLabel gucci3name = new JLabel("êµ¬ì°Œ ìŠ¤ëª° ë§ˆí‹€ë¼ì„¸ ìˆ„ë”ë°±");
+
+        gucci3name.setFont(font5);
+
+        gcenter.add(gucci3name);
+
+        gucci3name.setBounds(1310, 750, 260, 30);
+
+        gcenter.add(gucci3);
+
+        gucci3.setBounds(1200, 230, 477, 329);
+
+        // êµ¬ì°Œ ì„¸ë²ˆì§¸ ìƒí’ˆ ìƒì„¸í˜ì´ì§€
+        gucci3.addMouseListener(new MouseAdapter() {
+          public void mouseClicked(MouseEvent e) {
+            gucciproduct3.setVisible(true);
+          }
+        });
+
+        guccicon.add(gcenter);
+
+        gucciframe.setVisible(true);
+
+      }
+    });
+
+    // "ë‹¤ìŒ" ë²„íŠ¼
+    ImageIcon next = new ImageIcon(".//image//ë‹¤ìŒ.png");
+
+    Image nextImage = next.getImage();
+
+    Image nextImage2 = nextImage.getScaledInstance(80, 70, Image.SCALE_SMOOTH);
+
+    ImageIcon nexticon = new ImageIcon(nextImage2);
+
+    JButton nextbutton = new JButton(nexticon);
+
+    nextbutton.setBorderPainted(false);
+    nextbutton.setContentAreaFilled(false);
+    nextbutton.setFocusPainted(false);
+
+    center.add(nextbutton);
+
+    nextbutton.setBounds(1300, 350, 80, 70);
+
+    nextbutton.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+
+        center.setVisible(false);
+
+        JPanel center2 = new JPanel();
+
+        center2.setBounds(0, 50, 1800, 1000);
+
+        c.add(center2);
+
+        center2.setLayout(null);
+
+        center2.setBackground(Color.white);
+
+        // "í”„ë¼ë‹¤" ë¸Œëœë“œ
+        ImageIcon pradaI = new ImageIcon(".//image//í”„ë¼ë‹¤.png");
+
+        Image pradaImage = pradaI.getImage();
+
+        Image pradaImage2 = pradaImage.getScaledInstance(700, 500, Image.SCALE_SMOOTH);
+
+        ImageIcon pradaicon = new ImageIcon(pradaImage2);
+
+        JLabel prada = new JLabel(pradaicon);
+
+        center2.add(prada);
+
+        prada.setBounds(520, 150, 700, 500);
+
+        // "í”„ë¼ë‹¤" ìƒí’ˆ í˜ì´ì§€
+        prada.addMouseListener(new MouseAdapter() {
+          public void mouseClicked(MouseEvent e) {
+
+            JFrame pradaframe = new JFrame();
+
+            pradaframe.setLayout(null);
+
+            pradaframe.setResizable(false);
+
+            pradaframe.setLocationRelativeTo(null);
+
+            pradaframe.setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
+            Container pradacon = pradaframe.getContentPane();
+
+            JPanel titlep2 = new JPanel();
+
+            pradacon.add(titlep2);
+
+            titlep2.setBounds(0, 0, 1800, 50);
+
+            titlep2.setLayout(null);
+
+            titlep2.setBackground(Color.black);
+
+            JLabel pradaLabel = new JLabel("PRADA");
+
+            Font font = new Font("Nixie One", Font.BOLD, 30);
+
+            pradaLabel.setFont(font);
+
+            pradaLabel.setForeground(Color.white);
+
+            titlep2.add(pradaLabel);
+
+            pradaLabel.setBounds(820, 0, 120, 50);
+
+            JPanel pcenter = new JPanel();
+
+            pcenter.setBounds(0, 50, 1800, 1000);
+
+            pcenter.setLayout(null);
+
+            pcenter.setBackground(Color.white);
+
+            pradacon.add(pcenter);
+
+            ImageIcon pradaI1 = new ImageIcon(".//image//í”„ë¼ë‹¤ í”Œë¼ì¥¬ ìœ„ì»¤ ë° ìº”ë²„ìŠ¤ ë²„í‚·ë°±.png");
+
+            ImageIcon pradaI2 = new ImageIcon(".//image//í´ë ˆì˜¤ ë¸ŒëŸ¬ì‹œë“œ ê°€ì£½ ìˆ„ë”.png");
+
+            ImageIcon pradaI3 = new ImageIcon(".//image//í¬ë¡­ ì…°í‹€ëœë“œ ìš¸ ì¹´ë””ê±´.png");
+
+            // ìƒí’ˆ 1
+            JLabel prada1 = new JLabel(pradaI1);
+
+            JLabel prada1name = new JLabel("í”„ë¼ë‹¤ í”Œë¼ì¥¬ ìœ„ì»¤ ë° ìº”ë²„ìŠ¤ ë²„í‚·ë°±");
+
+            Font font5 = new Font("ë§‘ì€ ê³ ë”• Semilight", Font.BOLD, 18);
+
+            prada1name.setFont(font5);
+
+            pcenter.add(prada1name);
+
+            prada1name.setBounds(170, 750, 320, 30);
+
+            pcenter.add(prada1);
+
+            prada1.setBounds(120, 180, 400, 400);
+
+            // í”„ë¼ë‹¤ ì²«ë²ˆì§¸ ìƒí’ˆ ìƒì„¸í˜ì´ì§€
+            prada1.addMouseListener(new MouseAdapter() {
+              public void mouseClicked(MouseEvent e) {
+                pradaproduct1.setVisible(true);
+              }
+            });
+
+            // ìƒí’ˆ 2
+            JLabel prada2 = new JLabel(pradaI2);
+
+            JLabel prada2name = new JLabel("í´ë ˆì˜¤ ë¸ŒëŸ¬ì‹œë“œ ê°€ì£½ ìˆ„ë”");
+
+            prada2name.setFont(font5);
+
+            pcenter.add(prada2name);
+
+            pcenter.add(prada2);
+
+            prada2name.setBounds(763, 750, 260, 30);
+
+            prada2.setBounds(670, 180, 400, 400);
+
+            // í”„ë¼ë‹¤ ë‘ë²ˆì§¸ ìƒí’ˆ ìƒì„¸í˜ì´ì§€
+            prada2.addMouseListener(new MouseAdapter() {
+              public void mouseClicked(MouseEvent e) {
+                pradaproduct2.setVisible(true);
+              }
+            });
+
+            // ìƒí’ˆ 3
+            JLabel prada3 = new JLabel(pradaI3);
+
+            JLabel prada3name = new JLabel("í¬ë¡­ ì…°í‹€ëœë“œ ìš¸ ì¹´ë””ê±´");
+
+            prada3name.setFont(font5);
+
+            pcenter.add(prada3name);
+
+            prada3name.setBounds(1350, 750, 260, 30);
+
+            pcenter.add(prada3);
+
+            prada3.setBounds(1250, 225, 400, 400);
+
+            // êµ¬ì°Œ ì„¸ë²ˆì§¸ ìƒí’ˆ ìƒì„¸í˜ì´ì§€
+            prada3.addMouseListener(new MouseAdapter() {
+              public void mouseClicked(MouseEvent e) {
+                pradaproduct3.setVisible(true);
+              }
+            });
+
+            pradacon.add(pcenter);
+
+            pradaframe.setVisible(true);
+
+          }
+        });
+
+        ImageIcon backI = new ImageIcon(".//image//ì´ì „.png");
+
+        Image backImage = backI.getImage();
+
+        Image backImage2 = backImage.getScaledInstance(80, 70, Image.SCALE_SMOOTH);
+
+        ImageIcon backicon = new ImageIcon(backImage2);
+
+        JButton backbutton = new JButton(backicon);
+
+        backbutton.setBorderPainted(false);
+        backbutton.setContentAreaFilled(false);
+        backbutton.setFocusPainted(false);
+
+        center2.add(backbutton);
+        backbutton.setBounds(355, 350, 80, 70);
+
+        backbutton.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+
+            center2.setVisible(false);
+
+            center.setVisible(true);
+
+          }
+        });
+
+      }
+    });
+
+    setVisible(true);
+
+  }
+
+  // 2. íšŒì› ë¡œê·¸ì¸
+  public boolean Member_Login(String member_id, String member_passwd) {
+    boolean sw = false;
+    int member_login_cnt = 0;
+
+    try {
+      con = this.dbopen.getConnection();
+
+      sql = new StringBuffer();
+      sql.append(" SELECT COUNT(*) as member_login_cnt");
+      sql.append(" FROM member");
+      sql.append(" WHERE member_id=? AND member_passwd=?"); // ?ëŠ” ë³€ìˆ˜ì˜ ê°’ìœ¼ë¡œ ëŒ€ì²´ë¨
+
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setString(1, member_id);
+      pstmt.setString(2, member_passwd);
+      rs = pstmt.executeQuery();
+      rs.next();
+      member_login_cnt = rs.getInt("member_login_cnt");
+
+      if (member_login_cnt == 1) { // íŒ¨ìŠ¤ì›Œë“œ ì¼ì¹˜
+        sw = true;
+      } else {
+        sw = false;
+      }
+
+    } catch (SQLException e) {
+      System.out.println("SQL ë¬¸ë²•ì— ë¬¸ì œê°€ ìˆëŠ”ê²ƒ ê°™ìŠµë‹ˆë‹¤.");
+      e.printStackTrace();
+    } finally {
+      this.dbclose.close(con, pstmt, rs);
+    }
+
+    return sw;
+  }
+
+  // 3. ê´€ë¦¬ì ë¡œê·¸ì¸
+  public boolean Admin_Login(String admin_id, String admin_passwd) {
+    boolean sw = false;
+    int admin_login_cnt = 0;
+
+    try {
+      con = this.dbopen.getConnection();
+
+      sql = new StringBuffer();
+      sql.append(" SELECT COUNT(*) as admin_login_cnt");
+      sql.append(" FROM admin");
+      sql.append(" WHERE admin_id=? AND admin_passwd=?"); // ?ëŠ” ë³€ìˆ˜ì˜ ê°’ìœ¼ë¡œ ëŒ€ì²´ë¨
+
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setString(1, admin_id);
+      pstmt.setString(2, admin_passwd);
+      rs = pstmt.executeQuery();
+      rs.next();
+      admin_login_cnt = rs.getInt("admin_login_cnt");
+
+      if (admin_login_cnt == 1) { // íŒ¨ìŠ¤ì›Œë“œ ì¼ì¹˜
+        sw = true;
+      } else {
+        sw = false;
+      }
+
+    } catch (SQLException e) {
+      System.out.println("SQL ë¬¸ë²•ì— ë¬¸ì œê°€ ìˆëŠ”ê²ƒ ê°™ìŠµë‹ˆë‹¤.");
+      e.printStackTrace();
+    } finally {
+      this.dbclose.close(con, pstmt, rs);
+    }
+
+    return sw;
+  }
+
+  // íšŒì› ê°€ì…
+  public int create(MemberVO memberVO) {
+    int count = 0; // ë“±ë¡ëœ ë ˆì½”ë“œ ê°¯ìˆ˜
+
+    try {
+      con = this.dbopen.getConnection();
+
+      sql = new StringBuffer();
+      sql.append(
+          "INSERT INTO member(member_no, member_id, member_passwd, member_name, member_tel, member_address, member_rdate)");
+      sql.append("VALUES (member_no_seq.nextval, ?, ?, ?, ?, ?, sysdate)"); // ?ëŠ” ë³€ìˆ˜ì˜ ê°’ìœ¼ë¡œ ëŒ€ì²´ë¨
+
+      // ê° í…ìŠ¤íŠ¸í•„ë“œì— ì…ë ¥ëœ ê°’ì„ ë³€ìˆ˜ì— ì €ì¥
+      String ID = id.getText().trim();
+      String PW = pw.getText().trim();
+      String NAME = name.getText().trim();
+      String PHONE = phonenum.getText().trim();
+      String ADDRESS = address.getText().trim();
+
+      // ë³€ìˆ˜ë³„ ìœ íš¨ì„± ê²€ì‚¬
+      String regExp = "^[0-9]+$";
+
+      if (ID.length() < 6) {
+        JOptionPane.showMessageDialog(null, "ì•„ì´ë””ëŠ” 6ê¸€ì ì´ìƒ ì…ë ¥í•´ì£¼ì„¸ìš”");
+        id.setText("");
+      } else if (ID.length() >= 16) {
+        JOptionPane.showMessageDialog(null, "ì•„ì´ë””ëŠ” 16ê¸€ì ì´í•˜ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”");
+        id.setText("");
+      }
+
+      if (PW.length() < 8) {
+        JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ëŠ” 8ê¸€ì ì´ìƒ ì…ë ¥í•´ì£¼ì„¸ìš”");
+        pw.setText("");
+      } else if (PW.length() >= 16) {
+        JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ëŠ” 16ê¸€ì ì´í•˜ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”");
+        pw.setText("");
+      }
+
+      if (NAME.length() == 0) {
+        JOptionPane.showMessageDialog(null, "ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”");
+        name.setText("");
+      }
+
+      if (!(PHONE.length() == 10 || PHONE.length() == 11)) {
+        JOptionPane.showMessageDialog(null, "ì „í™”ë²ˆí˜¸ëŠ” 10-11ìë¦¬ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤");
+        phonenum.setText("");
+      } else if (!(PHONE.matches(regExp))) {
+        JOptionPane.showMessageDialog(null, "ì „í™”ë²ˆí˜¸ëŠ” ìˆ«ìë§Œ ì…ë ¥í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤");
+        phonenum.setText("");
+      }
+
+      if (ADDRESS.length() == 0) {
+        JOptionPane.showMessageDialog(null, "ì£¼ì†Œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”");
+        address.setText("");
+      }
+
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setString(1, ID);
+      pstmt.setString(2, PW);
+      pstmt.setString(3, NAME);
+      pstmt.setString(4, PHONE);
+      pstmt.setString(5, ADDRESS);
+
+      if (ID.length() < 6 || ID.length() >= 16 || PW.length() >= 16 || PW.length() < 8 || NAME.length() == 0
+          || !(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0) {
+        JOptionPane.showMessageDialog(null, "íšŒì›ê°€ì… ì‹¤íŒ¨, ë‹¤ì‹œ ì‹œë„í•´ ì£¼ì„¸ìš”.");
+      } else {
+        count = pstmt.executeUpdate(); // SQL ì‹¤í–‰
+
+        JOptionPane.showMessageDialog(null, "íšŒì›ê°€ì… ì™„ë£Œ");
+
+        id.setText("");
+        pw.setText("");
+        name.setText("");
+        phonenum.setText("");
+        address.setText("");
+        id.setText("");
+
+      }
+
+    } catch (Exception e1) {
+      System.out.println("SQL ë¬¸ë²•ì— ë¬¸ì œê°€ ìˆëŠ”ê²ƒ ê°™ìŠµë‹ˆë‹¤.");
+      e1.printStackTrace();
+    } finally {
+      this.dbclose.close(con, pstmt);
+    }
+
+    return count;
+
+  }
+
+  /**
+   * íšŒì›ì˜ ì´ë¦„ê³¼ ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ë©´ ID ì™€ PW ì¶œë ¥
+   * 
+   * @param member_name
+   * @param member_address
+   * @return
+   */
+  public MemberVO find_id_pw(String member_name, String member_tel) {
+
+    MemberVO memberVO = null;
+
+    try {
+      con = this.dbopen.getConnection();
+
+      sql = new StringBuffer();
+      sql.append(" SELECT member_id, member_passwd");
+      sql.append(" FROM member");
+      sql.append(" WHERE member_name = ? AND member_tel = ?");
+
+      String NAME = namefield.getText().trim();
+      String PHONE = telfield.getText().trim();
+
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setString(1, NAME);
+      pstmt.setString(2, PHONE);
+      rs = pstmt.executeQuery(); // SQL ì‹¤í–‰
+
+      if (rs.next() == true) { // ì²«ë²ˆì§¸ ë ˆì½”ë“œ -> ë§ˆì§€ë§‰ ë ˆì½”ë“œë¡œ ì´ë™
+        memberVO = new MemberVO();
+        memberVO.setMember_id(rs.getString("member_id"));
+        memberVO.setMember_passwd(rs.getString("member_passwd"));
+
+        JOptionPane.showMessageDialog(null, "ID: " + memberVO.getMember_id() + "\nPW: " + memberVO.getMember_passwd());
+      } else {
+        JOptionPane.showMessageDialog(null, "ì´ë¦„ì´ë‚˜ ì „í™”ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. \n ë‹¤ì‹œ ì‹œë„í•´ì£¼ì„¸ìš”");
+      }
+
+    } catch (SQLException e) {
+      System.out.println("SQL ë¬¸ë²•ì— ë¬¸ì œê°€ ìˆëŠ”ê²ƒ ê°™ìŠµë‹ˆë‹¤.");
+      e.printStackTrace();
+    } finally {
+      this.dbclose.close(con, pstmt, rs);
+    }
+
+    return memberVO;
+
+  }
+
+  public static void main(String[] args) {
+    // TODO Auto-generated method stub
+
+    new main();
+  }
 
 }
