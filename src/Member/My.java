@@ -1,12 +1,18 @@
 package Member;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -15,192 +21,435 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
-public class My extends JFrame{   
-    JTable table;
-     JScrollPane jsp;
-     Vector<String> col;
-     Vector<Vector<String>> rowData;
-   
-     String PHONE = null;
-     String ADDRESS = null;
+import Beans.MemberVO;
+import DB_Tool.DBClose;
+import DB_Tool.DBOpen;
+import Main.main;
 
-   public My(){//마이페이지
-      Dimension frameSize = this.getSize();
-       Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-      setTitle("MY PAGE");
-      //setLocationRelativeTo(null);
-      Container c=getContentPane();
-      setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
-      c.setBackground(Color.white);
-      
-      JPanel j=new JPanel();
-      j.setBackground(Color.white);
-      j.setPreferredSize(new Dimension(1200,195));
-      ImageIcon image=new ImageIcon(".//image//마페.png");
-      JLabel my=new JLabel(image);
-      j.add(my);
-      
-      JPanel j1=new JPanel();      
-      j1.setBackground(Color.white);
-      j1.setLayout(null);
-      
-      JLabel str=new JLabel("개인 정보");
-      str.setFont(new Font("맑은 고딕",Font.BOLD,30));
-      
-      JLabel str1=new JLabel("주문 조회");
-      str1.setFont(new Font("맑은 고딕",Font.BOLD,30));
-      
-      JLabel id=new JLabel("아이디");
-      id.setFont(new Font("맑은 고딕",Font.BOLD,30));
-      JTextField jt1=new JTextField(200);
-      
-      JLabel pw=new JLabel("비밀번호");
-      pw.setFont(new Font("맑은 고딕",Font.BOLD,30));
-      JTextField jt2=new JTextField(200);
-      
-      JLabel name=new JLabel("이름");
-      name.setFont(new Font("맑은 고딕",Font.BOLD,30));
-      JTextField jt3=new JTextField(200);
-      
-      JLabel tel=new JLabel("전화번호");
-      tel.setFont(new Font("맑은 고딕",Font.BOLD,30));
-      JTextField jt4=new JTextField(200);
-      
-      JLabel adr=new JLabel("주소");
-      adr.setFont(new Font("맑은 고딕",Font.BOLD,30));
-      JTextField jt5=new JTextField(200);
-      
-      JButton jb=new JButton("수정하기");
-      jb.setBackground(Color.black);
-      jb.setForeground(Color.WHITE);
-      jb.setFont(new Font("맑은 고딕",Font.BOLD,20));
-      
-      JButton jb1=new JButton("탈퇴하기");
-      jb1.setBackground(Color.black);
-      jb1.setForeground(Color.WHITE);
-      jb1.setFont(new Font("맑은 고딕",Font.BOLD,20));
-            
-      id.setBounds(1000,100,100,100);
-      pw.setBounds(1000,200,200,100);
-      name.setBounds(1000,300,100,100);
-      tel.setBounds(1000,400,200,100);
-      adr.setBounds(1000,500,100,100);
-      str.setBounds(1300,5,500,100);
-      str1.setBounds(483,5,500,100);
-      
-      
-      jt1.setBounds(1170,120,500,50);
-      jt1.setEnabled(false);
-      jt2.setBounds(1170,220,500,50);
-      jt2.setEnabled(false);
-      jt3.setBounds(1170,320,500,50);
-      jt3.setEnabled(false);
-      jt4.setBounds(1170,420,500,50);   
-      jt5.setBounds(1170,520,500,50);
-      jb.setBounds(1170,650,200,50);
-      jb1.setBounds(1450,650,200,50);
-      
-      j1.add(id);    j1.add(jt1);
-      j1.add(pw);    j1.add(jt2);
-      j1.add(name);  j1.add(jt3);
-      j1.add(tel);   j1.add(jt4);
-      j1.add(adr);   j1.add(jt5);
-      j1.add(str);   j1.add(str1);
-      j1.add(jb);    j1.add(jb1);
-      
-           String id1 = jt1.getText();
-           String pw1 = jt2.getText();
-           String name1 = jt3.getText();
-           String tel1 = jt4.getText();
-           String addr = jt5.getText();
+public class My extends JFrame {
+	JTable table;
+	JScrollPane jsp;
+	Vector<String> col;
+	Vector<Vector<String>> rowData;
+	
+	// 회원 번호 변경
+	int member_no = 1;
 
-      //수정하기버튼   
-      jb.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {         
-            //주문서확인 
-            String regExp = "^[0-9]+$";     
-             String PHONE = jt4.getText().trim();
-             String ADDRESS = jt5.getText().trim();   
-                  
-            if (!(PHONE.length() == 10 || PHONE.length() == 11)) {
-                 JOptionPane.showMessageDialog(null, "전화번호는 10-11자리만 가능합니다");
-                 jt4.setText("");
-               } else if (!(PHONE.matches(regExp))) {
-                 JOptionPane.showMessageDialog(null, "전화번호는 숫자만 입력할 수 있습니다");
-                 jt4.setText("");
-               }
-               if (ADDRESS.length() == 0) {
-                  JOptionPane.showMessageDialog(null, "주소를 입력해주세요");
-                  jt5.setText("");
-               }        
-               if ( !(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0||!(PHONE.matches(regExp))) {
-                    JOptionPane.showMessageDialog(null, "수정 실패, 다시 시도해 주세요.");
-                  } else {                 
-                JOptionPane.showMessageDialog(null,"수정이 완료되었습니다","수정하기",JOptionPane.INFORMATION_MESSAGE);    
-                  }         
-         }
-      });
-      
-      
-      //탈퇴하기
-      jb1.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null,"정말로 탈퇴 하시겠습니까?","가지마..",JOptionPane.INFORMATION_MESSAGE);
-            setVisible(false);
-            
-              rowData.remove(table);
-              table.updateUI();
-         }
-      });
-      
-      
-       col = new Vector<String>();
-          rowData = new Vector<Vector<String>>();
+	// 회원 탈퇴용 ID, PW 필드
+	JTextField id_field = new JTextField();
+	JPasswordField pw_field = new JPasswordField();
 
-          col.add("주문번호");
-          col.add("상품번호");
-          col.add("수량");
-          col.add("주문일");
+	String PHONE = null;
+	String ADDRESS = null;
 
-          table = new JTable(rowData, col);
-          c.add(table);
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	StringBuffer sql = null;
 
-          // 스크롤 부착
-          jsp = new JScrollPane(table);
-          jsp.getViewport().setBackground(Color.WHITE);
-          jsp.setBounds(250,318, 600, 500);
-          c.add(jsp);
-      
+	DBOpen dbopen = new DBOpen();
+	DBClose dbclose = new DBClose();
+	
+	JTextField jt1 = new JTextField(200);  // ID
+	JPasswordField jt2 = new JPasswordField(200);  // PW
+	JTextField jt3 = new JTextField(200);  // NAME
+	JTextField jt4 = new JTextField(200);  // TEL
+	JTextField jt5 = new JTextField(200);  // ADDRESS
 
-           Vector<String> v = new Vector<String>();
-           v.add(pw1);
-           v.add(id1);
-           v.add(name1);
-           v.add(tel1);
-           v.add(addr);
+	public My() {// 마이페이지
+		
+		
+		Dimension frameSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setTitle("MY PAGE");
+		// setLocationRelativeTo(null);
+		Container c = getContentPane();
+		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		c.setBackground(Color.white);
 
-           rowData.add(v);// 텍스트 필드에 있는 값을 추가하기.
+		JPanel j = new JPanel();
+		j.setBackground(Color.white);
+		j.setPreferredSize(new Dimension(1200, 195));
+		ImageIcon image = new ImageIcon(".//image//마페.png");
+		JLabel my = new JLabel(image);
+		j.add(my);
 
-           table.updateUI();
-      
-      
-      
-      c.add(j1);
-      c.add(j,BorderLayout.NORTH);
-      
-      setVisible(true);
-      
-      
-   }
-   public static void main(String[] args) {
-      new My();
+		JPanel j1 = new JPanel();
+		j1.setBackground(Color.white);
+		j1.setLayout(null);
 
-   }
+		JLabel str = new JLabel("개인 정보");
+		str.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+
+		JLabel str1 = new JLabel("주문 조회");
+		str1.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		
+		JLabel id = new JLabel("아이디");
+		id.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		
+		JLabel pw = new JLabel("비밀번호");
+		pw.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		
+		JLabel name = new JLabel("이름");
+		name.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		
+		JLabel tel = new JLabel("전화번호");
+		tel.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+
+		JLabel adr = new JLabel("주소");
+		adr.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+
+		JButton jb = new JButton("수정하기");
+		jb.setBackground(Color.black);
+		jb.setForeground(Color.WHITE);
+		jb.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+
+		JButton jb1 = new JButton("탈퇴하기");
+		jb1.setBackground(Color.black);
+		jb1.setForeground(Color.WHITE);
+		jb1.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+
+		id.setBounds(1000, 100, 100, 100);
+		pw.setBounds(1000, 200, 200, 100);
+		name.setBounds(1000, 300, 100, 100);
+		tel.setBounds(1000, 400, 200, 100);
+		adr.setBounds(1000, 500, 100, 100);
+		str.setBounds(1300, 5, 500, 100);
+		str1.setBounds(483, 5, 500, 100);
+
+		jt1.setBounds(1170, 120, 500, 50);
+		jt1.setEnabled(false);
+		jt2.setBounds(1170, 220, 500, 50);
+		jt2.setEnabled(false);
+		jt3.setBounds(1170, 320, 500, 50);
+		jt3.setEnabled(false);
+		jt4.setBounds(1170, 420, 500, 50);
+		jt5.setBounds(1170, 520, 500, 50);
+		jb.setBounds(1170, 650, 200, 50);
+		jb1.setBounds(1450, 650, 200, 50);
+
+		j1.add(id);
+		j1.add(jt1);
+		j1.add(pw);
+		j1.add(jt2);
+		j1.add(name);
+		j1.add(jt3);
+		j1.add(tel);
+		j1.add(jt4);
+		j1.add(adr);
+		j1.add(jt5);
+		j1.add(str);
+		j1.add(str1);
+		j1.add(jb);
+		j1.add(jb1);
+
+		
+		String id1 = jt1.getText().trim();
+		String pw1 = jt2.getText().trim();
+		String name1 = jt3.getText().trim();
+		String tel1 = jt4.getText().trim();
+		String addr = jt5.getText().trim();
+		
+		MemberVO memberVO = read(member_no);
+		
+		jt1.setText(memberVO.getMember_id());
+		jt2.setText(memberVO.getMember_passwd());
+		jt3.setText(memberVO.getMember_name());
+		jt4.setText(memberVO.getMember_tel());
+		jt5.setText(memberVO.getMember_address());
+		
+		// 수정하기버튼
+		jb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 주문서확인
+				String regExp = "^[0-9]+$";
+				String PHONE = jt4.getText().trim();
+				String ADDRESS = jt5.getText().trim();
+				
+				MemberVO memberVO = new MemberVO();
+				int update = member_update(memberVO);
+
+				if (!(PHONE.length() == 10 || PHONE.length() == 11)) {
+					JOptionPane.showMessageDialog(null, "전화번호는 10-11자리만 가능합니다");
+					jt4.setText("");
+				} else if (!(PHONE.matches(regExp))) {
+					JOptionPane.showMessageDialog(null, "전화번호는 숫자만 입력할 수 있습니다");
+					jt4.setText("");
+				}
+				if (ADDRESS.length() == 0) {
+					JOptionPane.showMessageDialog(null, "주소를 입력해주세요");
+					jt5.setText("");
+				}
+				if (!(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0 || !(PHONE.matches(regExp))) {
+					JOptionPane.showMessageDialog(null, "수정 실패, 다시 시도해 주세요.");
+				} else {
+					JOptionPane.showMessageDialog(null, "수정이 완료되었습니다", "수정하기", JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+			}
+		});
+
+		// 탈퇴하기
+		jb1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JFrame member_drop = new JFrame();
+
+				member_drop.setTitle("탈퇴하기");
+
+				Container con = member_drop.getContentPane();
+
+				con.setBackground(Color.white);
+
+				con.setLayout(null);
+
+				member_drop.setResizable(false);
+
+				member_drop.setSize(500, 500);
+
+				member_drop.setVisible(true);
+
+				JPanel title = new JPanel();
+
+				title.setLayout(null);
+
+				title.setBounds(0, 0, 500, 50);
+
+				title.setBackground(Color.black);
+
+				JLabel label = new JLabel("탈퇴하기");
+
+				Font font = new Font("맑은 고딕 Semilight", Font.BOLD, 14);
+
+				label.setForeground(Color.white);
+
+				label.setFont(font);
+
+				label.setBounds(170, 0, 160, 50);
+
+				title.add(label);
+
+				member_drop.add(title);
+
+				JLabel name = new JLabel("ID");
+				Font font2 = new Font("맑은 고딕 Semilight", Font.PLAIN, 18);
+				name.setFont(font2);
+				con.add(name);
+				name.setBounds(140, 100, 80, 50);
+
+				con.add(id_field);
+				id_field.setBounds(135, 155, 220, 30);
+
+				JLabel tel = new JLabel("Password");
+				tel.setFont(font2);
+				con.add(tel);
+				tel.setBounds(140, 200, 80, 50);
+
+				con.add(pw_field);
+				pw_field.setBounds(135, 255, 220, 30);
+
+				ImageIcon findI = new ImageIcon(".//image//탈퇴하기.png");
+				Image findI2 = findI.getImage();
+				Image find1 = findI2.getScaledInstance(60, 25, Image.SCALE_SMOOTH);
+				ImageIcon findI3 = new ImageIcon(find1);
+				JButton findbutton = new JButton(findI3);
+				con.add(findbutton);
+				findbutton.setBorderPainted(false);
+				findbutton.setContentAreaFilled(false);
+				findbutton.setFocusPainted(false);
+				findbutton.setBounds(210, 330, 60, 25);
+
+				findbutton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						String check_id = id_field.getText().trim();
+						String check_pw = pw_field.getText().trim();
+						int result = member_delete(check_id, check_pw);
+
+						if (result > 0) {
+							JOptionPane.showMessageDialog(null, "회원탈퇴가 진행되었습니다. 프로그램이 종료됩니다.");
+
+							System.exit(0);
+
+						} else if (check_id.length() == 0 || check_pw.length() == 0) {
+							JOptionPane.showMessageDialog(null, "ID나 PW가 입력되지 않았습니다.");
+							id_field.setText("");
+							pw_field.setText("");
+						} else {
+							JOptionPane.showMessageDialog(null, "ID나 PW가 일치하지 않습니다. \n다시 시도해주세요");
+							id_field.setText("");
+							pw_field.setText("");
+						}
+
+					}
+				});
+
+			}
+		});
+
+		col = new Vector<String>();
+		rowData = new Vector<Vector<String>>();
+
+		col.add("주문번호");
+		col.add("상품번호");
+		col.add("수량");
+		col.add("주문일");
+
+		table = new JTable(rowData, col);
+		c.add(table);
+
+		// 스크롤 부착
+		jsp = new JScrollPane(table);
+		jsp.getViewport().setBackground(Color.WHITE);
+		jsp.setBounds(250, 318, 600, 500);
+		c.add(jsp);
+
+		Vector<String> v = new Vector<String>();
+		v.add(pw1);
+		v.add(id1);
+		v.add(name1);
+		v.add(tel1);
+		v.add(addr);
+
+		rowData.add(v);// 텍스트 필드에 있는 값을 추가하기.
+
+		table.updateUI();
+
+		c.add(j1);
+		c.add(j, BorderLayout.NORTH);
+
+		setVisible(true);
+
+	}
+
+	/**
+	 * 회원탈퇴 메소드
+	 * @param member_id
+	 * @param member_passwd
+	 * @return
+	 */
+	public int member_delete(String member_id, String member_passwd) {
+		int count = 0; // 삭제된 레코드 갯수
+
+		try {
+			con = this.dbopen.getConnection();
+
+			// 삭제 처리
+			sql = new StringBuffer();
+			sql.append(" DELETE FROM member");
+			sql.append(" WHERE member_id = ? AND member_passwd = ?");
+
+			String ID = id_field.getText().trim();
+			String PW = pw_field.getText().trim();
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, ID);
+			pstmt.setString(2, PW);
+			count = pstmt.executeUpdate(); // SQL 실행
+
+		} catch (SQLException e) {
+			System.out.println("SQL 문법에 문제가 있는것 같습니다.");
+			e.printStackTrace();
+		} finally {
+			new DBClose().close(con, pstmt, rs);
+		}
+
+		return count;
+
+	}
+
+ 	 /** 개별 회원 정보 조회
+	 * @param member_no
+	 * @return
+	 */
+	public MemberVO read(int member_no) {
+		MemberVO memberVO = null;
+
+		try {
+			con = this.dbopen.getConnection();
+
+			sql = new StringBuffer();
+			sql.append(" SELECT member_id, member_passwd, member_name, member_tel, member_address");
+			sql.append(" FROM member");
+			sql.append(" WHERE member_no = ?");
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, member_no);
+			rs = pstmt.executeQuery(); // SQL 실행
+			
+		
+			if (rs.next() == true) { // 첫번째 레코드 -> 마지막 레코드로 이동
+
+				memberVO = new MemberVO();
+
+				memberVO.setMember_id(rs.getString("member_id"));
+				memberVO.setMember_passwd(rs.getString("member_passwd"));
+				memberVO.setMember_name(rs.getString("member_name"));
+				memberVO.setMember_tel(rs.getString("member_tel"));
+				memberVO.setMember_address(rs.getString("member_address"));
+
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("SQL 문법에 문제가 있는것 같습니다.");
+			e.printStackTrace();
+		} finally {
+			this.dbclose.close(con, pstmt, rs);
+		}
+
+		return memberVO;
+
+	}
+
+
+  /**
+	 * 회원 레코드 수정
+	 * @param memberVO
+	 * @return
+	 */
+	public int member_update(MemberVO memberVO) {
+		int count = 0; // 수정된 레코드의 갯수
+		
+		try {
+			con = this.dbopen.getConnection();
+
+			sql = new StringBuffer();
+			sql.append(" UPDATE member");
+			sql.append(" SET member_tel = ?, member_address=?"); // ?는 변수의 값으로 대체됨
+			sql.append(" WHERE member_no = ?");
+			
+			String PHONE = jt4.getText().trim();
+			String ADDRESS = jt5.getText().trim();
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, PHONE);
+			pstmt.setString(2, ADDRESS);
+			pstmt.setInt(3, member_no);
+
+			count = pstmt.executeUpdate(); // SQL 실행
+
+
+		} catch (SQLException e) {
+			System.out.println("SQL 문법에 문제가 있는것 같습니다.");
+			e.printStackTrace();
+		} finally {
+			new DBClose().close(con, pstmt, rs);
+		}
+
+		return count;
+
+	}
+
+	public static void main(String[] args) {
+		new My();
+
+	}
 
 }

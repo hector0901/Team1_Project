@@ -8,6 +8,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -22,17 +25,38 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import Beans.BuyVO;
+import DB_Tool.DBClose;
+import DB_Tool.DBOpen;
+
 public class GucciProduct3 extends JFrame {
-   int ea;
-   ImageIcon gg[]= {new ImageIcon(".//image//구찌 스몰 마틀라세 숄더백.png"),
-         new ImageIcon(".//image//스퀘어 G 체크 트위드 드레스.png"),
-         new ImageIcon(".//image//오버사이즈 케이블 니트 가디건.png")
-   };
-   JTable table;
-     JScrollPane jsp;
-     Vector<String> col;
-     Vector<Vector<String>> rowData;
-  public GucciProduct3(){
+	//DB관련 변수들
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	StringBuffer sql = null;
+
+	DBOpen dbopen = new DBOpen();
+	DBClose dbclose = new DBClose();
+
+	// Buy Beans
+	BuyVO buyVO = new BuyVO();
+
+	// 회원번호 1고정, 상품번호는 각 상품마다 1~6으로 따로 지정
+	// 3번 상품
+	int member_no = 1;
+	int product_no = 3;
+
+	JTextField jt = new JTextField(10);// 수량 입력필드
+
+	int ea;
+	ImageIcon gg[] = { new ImageIcon(".//image//구찌 스몰 마틀라세 숄더백.png"), new ImageIcon(".//image//스퀘어 G 체크 트위드 드레스.png"),
+			new ImageIcon(".//image//오버사이즈 케이블 니트 가디건.png") 
+			};
+
+	
+
+	public GucciProduct3(){
       super("상품 창");
       Container c=getContentPane();
       setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
@@ -106,7 +130,6 @@ public class GucciProduct3 extends JFrame {
       JButton plus=new JButton("+");
       JButton minus=new JButton("-");
      
-      JTextField jt=new JTextField(10);//수량 입력필드
       jt.setFont(new Font("맑은 고딕",Font.BOLD,20));
        
       minus.setBackground(Color.BLACK);
@@ -144,26 +167,8 @@ public class GucciProduct3 extends JFrame {
       //상품구매
       jb1.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-            //jt.setText("");
-            String regExp = "^[0-9]+$";     
-          String CNT = jt.getText().trim();
-          int cnt=Integer.parseInt(CNT);
-          
-          if (CNT==null ) {
-               JOptionPane.showMessageDialog(null, "수량를 입력해주세요");
-               jt.setText("");
-            } 
-          if(cnt <= 0) {
-             JOptionPane.showMessageDialog(null, "주문은 1개이상부터 가능합니다");
-               jt.setText("0");
-          }
-            if (cnt <= 0||CNT==null||!(CNT.matches(regExp))) {
-                 JOptionPane.showMessageDialog(null, "구매 실패, 다시 시도해 주세요.");
-               } else {                 
-               JOptionPane.showMessageDialog(null, 
-               "주문이 완료 되었습니다!","주문 완료",JOptionPane.INFORMATION_MESSAGE);  
-               dispose();
-               } 
+           
+        	 buy(product_no, member_no);
             
          }
       });
@@ -178,7 +183,67 @@ public class GucciProduct3 extends JFrame {
       c.add(panel2);
       setVisible(true);
    }
-   public static void main(String[] args) {
-      
-   }
+
+	 /**
+		 * 주문하기 메소드
+		 * @param product_no
+		 * @param member_no
+		 * @return
+		 */
+	public int buy(int product_no, int member_no) {
+		int count = 0; // 등록된 레코드 갯수
+
+		product_no = 3;
+		member_no = 1;
+
+		try {
+			con = this.dbopen.getConnection();
+
+			sql = new StringBuffer();
+			sql.append(
+					"insert into buy(buy_no, productno, member_no, buy_cnt,buy_date) values (buy_no_seq.nextval, ?, ?, ?,sysdate)");
+
+			// 각 텍스트필드에 입력된 값을 변수에 저장
+			String regExp = "^[0-9]+$";
+
+			String CNT = jt.getText().trim();
+			int cnt = Integer.parseInt(CNT);
+
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, product_no);
+			pstmt.setInt(2, member_no);
+			pstmt.setInt(3, cnt);
+
+			rs = pstmt.executeQuery();
+
+			if (CNT == null) {
+				JOptionPane.showMessageDialog(null, "수량를 입력해주세요");
+				jt.setText("");
+			}
+			if (cnt <= 0) {
+				JOptionPane.showMessageDialog(null, "주문은 1개이상부터 가능합니다");
+				jt.setText("0");
+			}
+			if (cnt <= 0 || CNT == null || !(CNT.matches(regExp))) {
+				JOptionPane.showMessageDialog(null, "구매 실패, 다시 시도해 주세요.");
+			} else {
+				JOptionPane.showMessageDialog(null, "주문이 완료 되었습니다!", "주문 완료", JOptionPane.INFORMATION_MESSAGE);
+				jt.setText("");
+				dispose();
+			}
+
+		} catch (Exception e1) {
+			System.out.println("SQL 문법에 문제가 있는것 같습니다.");
+			e1.printStackTrace();
+		} finally {
+			this.dbclose.close(con, pstmt);
+		}
+
+		return count;
+
+	}
+
+	public static void main(String[] args) {
+
+	}
 }

@@ -44,7 +44,6 @@ import Product.PradaProduct3;
 public class main extends JFrame {
 
   MemberVO memberVO = new MemberVO();
-
   AdminVO adminVO = new AdminVO();
 
   JFrame loginf = new JFrame();
@@ -109,7 +108,7 @@ public class main extends JFrame {
   Notice_customer notice_customer = new Notice_customer();
   Notice notice_function = new Notice();
 
-  main() {
+  public main() {
 
     dbopen = new DBOpen();
     dbclose = new DBClose();
@@ -301,7 +300,6 @@ public class main extends JFrame {
             String check_pw = pwtxt.getText().trim();
 
             boolean member_login = Member_Login(check_id, check_pw);
-
             boolean admin_login = Admin_Login(check_id, check_pw);
 
             if (check_id.length() == 0 || check_pw.length() == 0) {
@@ -1147,7 +1145,6 @@ public class main extends JFrame {
 
   /**
    * 회원의 이름과 전화번호를 입력하면 ID 와 PW 출력
-   * 
    * @param member_name
    * @param member_address
    * @return
@@ -1172,11 +1169,10 @@ public class main extends JFrame {
       pstmt.setString(2, PHONE);
       rs = pstmt.executeQuery(); // SQL 실행
 
-      if (rs.next() == true) { // 첫번째 레코드 -> 마지막 레코드로 이동
-        memberVO = new MemberVO();
+      if (rs.next() == true) { // 첫번째 레코드 -> 마지막 레코드로 이동    
+      	memberVO = new MemberVO();
         memberVO.setMember_id(rs.getString("member_id"));
         memberVO.setMember_passwd(rs.getString("member_passwd"));
-
         JOptionPane.showMessageDialog(null, "ID: " + memberVO.getMember_id() + "\nPW: " + memberVO.getMember_passwd());
       } else {
         JOptionPane.showMessageDialog(null, "이름이나 전화번호가 일치하지 않습니다. \n 다시 시도해주세요");
@@ -1194,8 +1190,6 @@ public class main extends JFrame {
   }
 
   public static void main(String[] args) {
-    // TODO Auto-generated method stub
-
     new main();
   }
 
