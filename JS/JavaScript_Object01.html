@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Object</title>
+</head>
+<body>
+
+    <script>
+        var date = new Date();  // Date 타입의 date 객체 생성 (Core 객체)
+
+        document.write(date.toLocaleDateString() + "<br>");
+        document.write(date.toLocaleTimeString() + "<br>");
+        document.write(date.getDate() + "<br>");            // 일
+        document.write(date.getDay() + "<br>");             // 요일
+        document.write(date.getMinutes + "<br>");           // 분
+
+        var str = new String("JavaScript"); // String 타입의 str 객체 생성 (Core 객체)
+        document.write(str + "<br>")
+        document.write(str.length + "<br>")  // 10
+
+        var now = new Date();
+        document.write(now.toUTCString() + "<br>");
+        document.write(now.getFullYear() + "년도 <br>");
+        document.write(now.getMonth() + 1 + "월 <br>");            // month에 + 1을해야 정상적이게 출력
+        document.write(now.getDate() + "일 <br>");
+        document.write(now.getHours() + "시 <br>");
+
+        var now2 = new Date(2021, 7, 22, 12, 12, 12);             // 원하는 날짜를 직접 지정할 수 있다.
+        document.write(now.toLocaleString() + "<br>");            // month에 + 1이 되어 8월이 출력됨     
+    </script>
+    
+</body>
+</html>

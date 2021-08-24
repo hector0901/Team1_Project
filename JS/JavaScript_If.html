@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>If</title>
+</head>
+<body>
+
+    <script>
+        var score;
+        var num1 = prompt("첫번째 점수를 입력하세요.", 100);
+        var num2 = prompt("두번째 점수를 입력하세요.", 50);
+
+        var tot = parseInt(num1) + parseInt(num2);
+
+        document.write(parseInt(tot));
+
+        document.write("<br><br>");
+
+        if(tot >= 180) {
+            score = "A학점";
+        } else if(tot >= 170) {
+            score = "B학점";
+        } else if(tot >= 160) {
+            score = "C학점";
+        } else {
+            score = "F학점";
+        }
+
+        document.write(score);
+    </script>
+    
+</body>
+</html>

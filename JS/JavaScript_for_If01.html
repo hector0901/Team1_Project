@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>For_If</title>
+</head>
+
+<body>
+
+    <script>
+        var tot = 0;
+
+        for (var i = 1; i <= 10; i++) {
+            if(i % 4 != 1) {            // 1 5 9를 제외한 나머지 수가 나오면 ++
+                continue;
+            } else {
+                tot = tot + i;          // 1 + 5 + 9 
+            }
+        }
+
+        document.write(tot); 
+    </script>
+
+</body>
+
+</html>

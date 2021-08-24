@@ -29,6 +29,7 @@ import Beans.BuyVO;
 import Beans.MemberVO;
 import DB_Tool.DBClose;
 import DB_Tool.DBOpen;
+import Member.My;
 
 public class PradaProduct3 extends JFrame {
 	Connection con = null;
@@ -105,7 +106,7 @@ public class PradaProduct3 extends JFrame {
 		text2.setBounds(1200, 350, 600, 50);
 
 		// ªÛ«∞π¯»£
-		JLabel j4 = new JLabel("no.3");
+		JLabel j4 = new JLabel("no.6");
 		j4.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 20));
 		j4.setBounds(250, 20, 100, 40);
 
@@ -140,22 +141,29 @@ public class PradaProduct3 extends JFrame {
 		panel2.add(plus);
 		panel2.add(minus);
 		panel2.add(jt);
+		jt.setText("0");
 
-		plus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// +
-				ea++;
-				jt.setText(String.valueOf(ea));
-			}
-		});
-		
-		minus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// -
-				ea--;
-				jt.setText(String.valueOf(ea));
-			}
-		});
+		JLabel jt1=new JLabel("$ 0");//∞°∞›
+        jt1.setFont(new Font("∏º¿∫ ∞ÌµÒ",Font.BOLD,30));
+        jt1.setBounds(1393,450,105,50);
+        panel2.add(jt1);
+     
+        plus.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+           //+
+           ea++;
+           jt.setText(String.valueOf(ea));
+           jt1.setText(String.valueOf("$"+(ea*1990)));
+        }
+        });
+        minus.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+           //-
+           ea--;
+           jt.setText(String.valueOf(ea));
+           jt1.setText(String.valueOf("$"+(ea*1990)));
+        }
+        });
 
 		// ªÛ«∞±∏∏≈
 		jb1.addActionListener(new ActionListener() {
@@ -163,6 +171,8 @@ public class PradaProduct3 extends JFrame {
 				// jt.setText("");
 				
 				buy(product_no, member_no);
+				My my = new My();
+                my.setVisible(true);
 				
 			}
 		});

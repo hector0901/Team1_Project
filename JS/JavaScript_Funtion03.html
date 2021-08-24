@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <script>
+        function input() {
+            return this.num;
+        }
+
+        function plus(n) {
+            this.num += n;
+        }
+
+        function minus(n) {
+            this.num -= n;
+            return n;
+        }
+
+        //사용자 객체 만들기!
+        var obj = new Object();
+
+        obj.name = "지현"; //속성 생성과 동시에 초기화
+        obj.money = 1000000; //속성 생성과 동시에 초기화
+        obj.num = 4000;
+
+        obj.input = input; //메소드 작성
+        obj.plus = plus;
+        obj.minus = minus;
+    </script>
+
+</head>
+
+<body>
+
+    <script>
+        document.write(obj.name);
+        obj.plus(1000);
+        document.write(obj.input() + "<br>");
+
+        obj.minus(500);
+        document.write(obj.input() + "<br>");
+    </script>
+
+</body>
+</html>

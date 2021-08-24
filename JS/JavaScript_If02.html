@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+
+        var name = prompt("이름을 입력해주세요", "홍길동");
+
+        if(name == null) {                                    /* 취소버튼 혹은 닫은 경우*/         
+            document.write("취소버튼을 누르셨어요.");  
+        } else if(name == "") {                             /* 입력없는 확인 버튼*/
+            document.write("이름을 입력하지 않고 확인 버튼을 누르셨습니다.");                      
+        } else {
+            document.write(name);
+        }
+    </script>
+    
+</body>
+</html>

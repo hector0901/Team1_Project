@@ -1,6 +1,7 @@
 package Main;
 
 import java.awt.Color;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -107,6 +108,7 @@ public class main extends JFrame {
   // 공지사항
   Notice_customer notice_customer = new Notice_customer();
   Notice notice_function = new Notice();
+  
 
   public main() {
 
@@ -164,7 +166,7 @@ public class main extends JFrame {
 
     up.setBackground(Color.black);
 
-    JLabel label = new JLabel("TITLE");
+    JLabel label = new JLabel("");
 
     Font font = new Font("Nixie One", Font.BOLD, 30);
 
@@ -311,8 +313,9 @@ public class main extends JFrame {
             else if (member_login == true) {
               JOptionPane.showMessageDialog(null, "회원으로 로그인 되었습니다.", "로그인 성공", JOptionPane.DEFAULT_OPTION);
 
+              System.out.println("회원번호: " + find_member_no(check_id, check_pw).getMember_no());
+              
               loginf.setVisible(false);
-
               mypage.setForeground(Color.white);
 
               // 로그아웃
@@ -323,7 +326,6 @@ public class main extends JFrame {
                   System.exit(0);
                 }
               });
-
             }
 
             else if (admin_login == true) {
@@ -562,8 +564,10 @@ public class main extends JFrame {
 
         enter.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
+             String ID = id.getText().trim();
+            id_check(ID);
+            
             create(memberVO);
-
           }
 
         });
@@ -1080,7 +1084,7 @@ public class main extends JFrame {
       } else if (ID.length() >= 16) {
         JOptionPane.showMessageDialog(null, "아이디는 16글자 이하로 입력해주세요");
         id.setText("");
-      }
+      } 
 
       if (PW.length() < 8) {
         JOptionPane.showMessageDialog(null, "비밀번호는 8글자 이상 입력해주세요");
@@ -1128,12 +1132,11 @@ public class main extends JFrame {
         name.setText("");
         phonenum.setText("");
         address.setText("");
-        id.setText("");
 
       }
 
     } catch (Exception e1) {
-      System.out.println("SQL 문법에 문제가 있는것 같습니다.");
+      System.out.println("SQL 문법에 문제가 있는것 같습니다!");
       e1.printStackTrace();
     } finally {
       this.dbclose.close(con, pstmt);
@@ -1170,7 +1173,7 @@ public class main extends JFrame {
       rs = pstmt.executeQuery(); // SQL 실행
 
       if (rs.next() == true) { // 첫번째 레코드 -> 마지막 레코드로 이동    
-      	memberVO = new MemberVO();
+         memberVO = new MemberVO();
         memberVO.setMember_id(rs.getString("member_id"));
         memberVO.setMember_passwd(rs.getString("member_passwd"));
         JOptionPane.showMessageDialog(null, "ID: " + memberVO.getMember_id() + "\nPW: " + memberVO.getMember_passwd());
@@ -1188,6 +1191,86 @@ public class main extends JFrame {
     return memberVO;
 
   }
+  
+  /**
+   * ID 중복 체크
+   * @param member_id
+   * @return
+   */
+  public boolean id_check(String member_id) {
+     boolean result = false;
+     int count = 0;
+     
+      try {
+       con = this.dbopen.getConnection();
+
+       sql = new StringBuffer();
+       sql.append(" SELECT count(*) as double_id ");
+       sql.append(" FROM member");
+       sql.append(" WHERE member_id = ?");
+       
+       pstmt = con.prepareStatement(sql.toString());
+       pstmt.setString(1, member_id);
+       rs = pstmt.executeQuery(); // SQL 실행
+       rs.next();
+       count = rs.getInt("double_id");
+       
+       if(count > 0) {
+          result = true;
+          JOptionPane.showMessageDialog(null, "중복된 ID가 있습니다.");
+       } else {
+          result = false;
+       }
+       
+       System.out.println("중복된 ID 갯수: " + count);
+       System.out.println("아이디 중복: " + result);
+       
+     } catch (SQLException e) {
+       System.out.println("SQL 문법에 문제가 있는것 같습니다.");
+       e.printStackTrace();
+     } finally {
+       this.dbclose.close(con, pstmt, rs);
+     }
+      
+     return result;
+  }
+  
+  
+  /**
+   * 회원번호 불러오기
+   * @param member_id
+   * @param member_passwd
+   * @return
+   */
+  public MemberVO find_member_no(String member_id, String member_passwd) {
+    MemberVO memberVO = new MemberVO();
+    try {
+      con = this.dbopen.getConnection(); 
+      
+      sql = new StringBuffer();
+      sql.append(" SELECT member_no");
+      sql.append(" FROM member");
+      sql.append(" WHERE member_id = ? AND member_passwd = ?");
+
+      pstmt = con.prepareStatement(sql.toString());
+      pstmt.setString(1, member_id);
+      pstmt.setString(2, member_passwd);
+      rs = pstmt.executeQuery(); // SQL 실행
+      
+      if (rs.next() == true) { // 첫번째 레코드 -> 마지막 레코드로 이동
+        memberVO.setMember_no(rs.getInt("member_no"));
+      }
+    } catch (SQLException e) {
+      System.out.println("SQL 문법에 문제가 있는것 같습니다.");
+      e.printStackTrace();
+    } finally {
+      this.dbclose.close(con, pstmt, rs);      
+    }
+    
+    return memberVO;    
+  }
+
+  
 
   public static void main(String[] args) {
     new main();

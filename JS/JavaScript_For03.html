@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>For(Star)</title>
+
+    <script>
+
+        function star(n) {
+
+            var n = prompt("정수를 입력해주세요.", 0);
+            n = parseInt(n);
+
+            if(isNaN(n)) {            
+                document.write("오류");
+            } else {
+                for(var i = 0; i < n; i++) {
+                    document.write("★");
+                }
+            }
+
+        }
+    </script>
+
+</head>
+<body>
+
+    <script>
+        star();  // 함수 호출
+    </script>
+        <table border="1" style="border-collapse: collapse; width: 30%; text-align: center;">
+    </table>
+</body>
+</html>

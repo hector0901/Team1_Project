@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Animation5</title>
+
+    <style>
+
+        div{
+            display: inline-block;
+            background-color: green;
+            color: white;
+            padding: 10px;
+            margin-right: 10px;
+        }
+
+        #ro{
+            transform: rotate(20deg);
+        }
+
+        #sk{
+            transform: skew(0deg, -20deg);     /* x, y축 */
+        }
+
+        #tr{
+            transform: translateY(50px);
+        }
+
+        #sc{
+            transform: scale(3, 1);
+        }
+
+        #ro:hover{
+            transform: rotate(80deg);
+        }
+
+        #sk:hover{
+            transform: skew(0deg, -60deg);
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div id="ro">회전</div>
+    <div id="sk">기울임</div>
+    <div id="tr">이동</div>
+    <div id="sc">확대/축소</div>
+    
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Math</title>
+</head>
+<body>
+
+    <script>
+        for (i = 0; i < 10; i++) {
+            var m = Math.random() * 100;      	// m은 0~99.999... 보다 작은 실수 난수
+            var n = Math.floor(m); 				// m에서 소수점 이하를 제거한 정수(0~99사이)
+            document.write(n + " ");
+        }
+    </script>
+
+    <br>
+
+    <script>
+        var n = new String("Ja va Script");
+        var m = "~~";
+
+        document.write(n.charAt(0) + "<br>");
+        document.write(n.substr(1,3) + "<br>");
+        document.write(n.slice(1, 3) + "<br>");
+        document.write(n.concat(m) + "<br>");
+        document.write(n.replace("J", "Z") + "<br>");
+
+        var s = n.split(" ");
+
+        for(var i = 0; i < s.length; i++) {
+            document.write([i] +  " = " + s[i] + "<br>")
+        }
+        
+    </script>
+
+
+
+</body>
+</html>

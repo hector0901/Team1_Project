@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Do_While</title>
+</head>
+<body>
+
+    <script>
+
+        var n = prompt("정수를 입력하세요.", 0);  // 여기에 입력되는 값은 String 
+        n = parseInt(n);                         // 입력된 n을 정수로 변환
+
+        var i = 0;
+        var sum = 0;
+
+        do {
+            
+            sum += i;
+            i++
+
+        } while(i <= n);
+
+        document.write(sum);
+
+
+    </script>
+    
+</body>
+</html>

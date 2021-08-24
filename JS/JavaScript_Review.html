@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>JS</title>
+
+    <script>
+        
+    </script>
+</head>
+
+<body>
+
+    <script>
+        document.write("<h2>Java</h2>");
+        document.write("aa\n");
+
+
+        var alert = window.alert("입력이 시작됩니다.");
+        var input = prompt("이름을 입력하세요.", "예시) 홍길동")
+        document.write(input);
+
+        var choose = window.confirm();
+
+        var x = 1;
+        var y = 2;
+        var z = 3;
+        var w = 4;
+
+        y = x++;
+        z += x;                    // z = z + x
+
+        document.write("<br>")
+        document.write(x + "\n");  //  2
+        document.write(y + "\n");  //  1
+        document.write(z + "\n");  //  5
+        document.write(w + "\n");  //  4
+
+        document.write("<br>");
+        w = (w > 2)? w - 2 : 3 - w;   // 4 > 2 => 2
+        document.write(w + "\n");
+
+        document.write("<br>");
+        var name = ("홍길동" > "김철수");     // ㅎ이 ㄱ 보다 더 뒤에 있음
+        document.write(name);                // True
+
+        document.write("<br>"); 
+        var v = 1 + "hi" + 2 + 3             // 1hi23
+        document.write(v);  
+
+        document.write("<br>");              // 5hi
+        var v2 =  2 + 3 + "hi"
+        document.write(v2);             
+
+        var a;
+        function f() {
+            var b = x + 5;
+            z = y + 5;
+            return z;
+        }
+
+    </script>
+
+</body>
+
+</html>

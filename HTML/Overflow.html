@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Practice05</title>
+
+    <style>
+        p{
+            width: 15em;
+            height: 3em;
+            border: 1px solid black;
+        }
+
+        /* overflow된 값 숨김 */
+        /* white-space: nowrap; 줄바꿈 X */
+        /* text-overflow: ellipsis; -> overflow된 값 말줄임표로 표시 */
+        .a{
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        /* overflow된 값 출력 */
+        .b{
+            overflow: visible;
+        }
+
+        /* overflow된 값 scroll로 출력  */
+        .c{
+            overflow: scroll;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p class="a">
+        류현진은 18일(한국시간)
+        미국 메릴랜드 볼티모어
+        오리올파크에서 열린 2021
+        메이저리그
+    </p>
+
+    <p class="b">
+        류현진은 18일(한국시간)
+        미국 메릴랜드 볼티모어
+        오리올파크에서 열린 2021
+        메이저리그
+    </p>
+
+    <p class="c">
+        류현진은 18일(한국시간)
+        미국 메릴랜드 볼티모어
+        오리올파크에서 열린 2021
+        메이저리그
+    </p>
+
+</body>
+</html>

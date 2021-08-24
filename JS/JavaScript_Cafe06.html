@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Cafe06</title>
+</head>
+
+<body>
+
+    <script>
+        var time = new Date();
+        var h = time.getHours();
+
+        if (h <= 12 && h >= 0) {
+            document.write(h + "시");
+            document.body.style.backgroundColor = "Yellow";
+        } else {
+            document.write(h + "시");
+            document.body.style.backgroundColor = "Green";
+        }
+    </script>
+
+</body>
+</html>

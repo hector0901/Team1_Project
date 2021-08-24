@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Function01</title>
+
+    <script>
+
+        function add(su1, su2) {
+            return su1 + su2;
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <script>
+        window.alert("계산이 시작됩니다.");
+
+        var num1 = prompt("첫번째 정수를 입력하세요.", "");
+        var num2 = prompt("두번째 정수를 입력하세요.", "");
+
+        var tot = add(parseInt(num1), parseInt(num2));
+
+        if (num1 == "" || num2 == "" || num1 == null || num2 == null) {
+            document.write("값을 입력해주세요.");
+        } else {
+            document.write("두 수의 합: ");
+            document.write(tot);
+        }
+
+        var a = eval("1 + 2 * 3");
+        document.write("<br>");          // 7
+        document.write(a + "<br>");
+
+        var b = parseInt("36");             // 문자열 "36"을 정수형 36으로 형변환 
+        document.write((b + 10) + "<br>");  // 36 + 10 =  46
+
+        var c = parseInt("1");
+        
+        if(isNaN(c)) {                      // isnan => is not a number 숫자가 아니면 
+            document.write("숫자가 아닙니다.");
+        } else {
+            document.write(c + "는 숫자 입니다. <br>");
+        }
+    </script>
+
+</body>
+
+</html>

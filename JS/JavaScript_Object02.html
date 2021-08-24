@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+
+    <script>
+        function r() {
+            return Math.floor(Math.random() * 9) + 1;
+        }
+    </script>
+</head>
+<body>
+    <script>
+        var n = r() + " + " + r();
+        var v = prompt(n + "의 결과값: ", "");
+        
+        if(v == null) {
+            document.write("종료");
+        } else {
+            var answer = eval(n);
+
+            if(answer == v) {
+                document.write("정답");
+            } else {
+                document.write("오답");
+            }
+        }   
+    </script>
+</body>
+</html>

@@ -27,13 +27,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class MemberList extends JFrame {
 
-   /**
+    /**
     * @변수명 : serialVersionUID
     * @설명 : 직렬화시 필요한 변수 선언
     */
    private static final long serialVersionUID = 1L;
 
-   /**
+    /**
     * @변수명 : data
     * @설명 : 테이블에 표시될 데이터를 저장하는 벡터 변수 선언
     */
@@ -70,14 +70,13 @@ public class MemberList extends JFrame {
     * @변수명 : btnUpdate
     * @설명 : 수정 버튼 객체 변수 선언
     */
-   private JButton btnUpdate      = null;
+   private JButton btnUpdate = null;
 
     /**
     * @변수명 : btnClear
     * @설명 : 초기화 버튼 객체 변수 선언
     */
-   private JButton btnClear      = null;
-
+   private JButton btnClear = null;
    private JTextField TF_Member_NO   = null;
    private JTextField TF_Member_ID = null;
    private JTextField TF_Member_PW   = null;
@@ -87,19 +86,19 @@ public class MemberList extends JFrame {
    private JTextField TF_Member_RDATE   = null;
 
    // 레이블 변수 선언
-   private JLabel   LB_Member_NO   = null;
-   private JLabel   LB_Member_ID   = null;
-   private JLabel   LB_Member_PW   = null;
-   private JLabel   LB_Member_NAME   = null;
-   private JLabel   LB_Member_TEL   = null;
-   private JLabel   LB_Member_ADDRESS   = null;
-   private JLabel   LB_Member_RDATE   = null;
+   private JLabel LB_Member_NO = null;
+   private JLabel LB_Member_ID   = null;
+   private JLabel LB_Member_PW   = null;
+   private JLabel LB_Member_NAME   = null;
+   private JLabel LB_Member_TEL   = null;
+   private JLabel LB_Member_ADDRESS   = null;
+   private JLabel LB_Member_RDATE   = null;
    
-   private JLabel   top_label   = null;
+   private JLabel top_label   = null;
    
-   String Url = "jdbc:oracle:thin:@220.72.27.180:1521/xe"; // URL 정보 저장 변수
+   String Url = "jdbc:oracle:thin:@172.16.14.12:1521:XE"; // URL 정보 저장 변수
    private String user = "sys as sysdba"; // user 정보 저장 변수 -> hr
-   private String password = "1234"; // password 정보 저장 변수 -> hr
+   private String password = "0000"; // password 정보 저장 변수 -> hr
 
    private Connection conn       = null;
    private Statement stmt         = null;
@@ -119,8 +118,8 @@ public class MemberList extends JFrame {
       setLocationRelativeTo(null);
 
       preDbTreatment();
+      
       data = new Vector<>();
-
       title = new Vector<>();
 
       title.add("회원 번호");
@@ -150,19 +149,18 @@ public class MemberList extends JFrame {
       //   테이블에 마우스 클릭(mouseClicked)시 처리될 이벤트 등록
       table.addMouseListener(new MouseAdapter() {
 
-      // 마우스 클릭시 처리를 담당하는 메소드 재정의
-         
+        // 마우스 클릭시 처리를 담당하는 메소드 재정의
          @Override
          public void mouseClicked(MouseEvent e) {
    
          //   getSelectedRow() : 테이블에서 선택된 줄의 값을 가지고 오는 메소드(0부터 시작됨) 
          int index = table.getSelectedRow();
          
-         //   현재 테이블에 표시되고 있는 data(모델)에서 index(현재 선택된 줄값)로 
-         //   1개의 레코드(줄) 전체를 벡터로 저장해서 in 벡터 변수에 대입
-         Vector in = (Vector) data.get(index);
+         // 현재 테이블에 표시되고 있는 data(모델)에서 index(현재 선택된 줄값)로 
+         // 1개의 레코드(줄) 전체를 벡터로 저장해서 in 벡터 변수에 대입
+         Vector in = (Vector)data.get(index);
          
-         //   in 벡터에 들어있는 값을 각각의 String 변수에 대입 
+         // in 벡터에 들어있는 값을 각각의 String 변수에 대입 
          int member_no = (int)in.get(0);
          String member_id = (String)in.get(1);
          String member_passwd = (String)in.get(2);
@@ -173,7 +171,6 @@ public class MemberList extends JFrame {
          
          //  화면에 표시된 각각의 TextField(번호~가입일까지)에 
          //   값 setting
-         
          TF_Member_NO.setText(Integer.toString(member_no));
          TF_Member_ID.setText(member_id);
          TF_Member_PW.setText(member_passwd);
@@ -184,16 +181,18 @@ public class MemberList extends JFrame {
 
          // 번호는 setEditable(false)로 수정 방지 처리
          TF_Member_NO.setEditable(false);
+         TF_Member_RDATE.setEditable(false);
          TF_Member_ID.setEditable(false);
          TF_Member_PW.setEditable(false);
+         TF_Member_NAME.setEditable(false);
 
          }
 
       });
 
-     //   화면에 표시될 패널 생성
+      // 화면에 표시될 패널 생성
       JPanel panel = new JPanel();
-//      panel.setBackground(Color.white);
+      // panel.setBackground(Color.white);
 
       //   값을 입력받거나 표시할 텍스트필드(번호, 이름, 주소) 생성 <= 입력받지 않아도 될 변수 제거할것 나중에..
       TF_Member_NO = new JTextField(5);
@@ -204,8 +203,7 @@ public class MemberList extends JFrame {
       TF_Member_ADDRESS = new JTextField(20);
       TF_Member_RDATE = new JTextField(10);
 
-    //      레이블 생성
-
+      // 레이블 생성
       LB_Member_NO = new JLabel("회원 번호");
       LB_Member_ID = new JLabel("아이디");
       LB_Member_PW = new JLabel("비밀번호");
@@ -349,6 +347,9 @@ public class MemberList extends JFrame {
             
             //   수정가능하게 변경
             // TF_Member_NO.setEditable(true);
+            TF_Member_ID.setEditable(true);
+            TF_Member_PW.setEditable(true);
+            TF_Member_NAME.setEditable(true);
             TF_Member_TEL.setEditable(true);
             TF_Member_ADDRESS.setEditable(true);
 

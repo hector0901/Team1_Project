@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        // num => 문자열
+        var num = prompt("정수를 입력하세요.", 0);
+
+        // 따라서 num을 정수형으로 형변환이 필요
+        num = parseInt(num);
+
+        var i = 1;
+        var tot = 0;
+
+        while(i <= num) {
+            tot = tot + i;
+            i = i + 1;
+        }
+
+        if(num > 0) {
+            document.write("1 ~ " + num + "까지의 합: ");
+            document.write(tot);
+        } else {
+            document.write("0과 같거나 0보다 작은값은 계산할 수 없습니다.");
+        }
+        
+
+
+    </script>
+    
+</body>
+</html>

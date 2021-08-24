@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <span id="s">자바 스크립트</span>
+    <button onclick="act()">변경</button>
+    <script>
+        function act() {
+            var n = document.getElementById("s");
+            n.style.color = "blue";
+        }
+    </script>
+    <button onclick="window.location.reload()">초기화</button>
+</body>
+
+</html>

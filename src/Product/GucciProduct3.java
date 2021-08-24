@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import Beans.BuyVO;
 import DB_Tool.DBClose;
 import DB_Tool.DBOpen;
+import Member.My;
 
 public class GucciProduct3 extends JFrame {
 	//DB관련 변수들
@@ -145,13 +146,20 @@ public class GucciProduct3 extends JFrame {
       panel2.add(plus);
       panel2.add(minus);
       panel2.add(jt);
+      jt.setText("0");
    
+   
+      JLabel jt1=new JLabel("$ 0");//가격
+      jt1.setFont(new Font("맑은 고딕",Font.BOLD,30));
+      jt1.setBounds(1393,450,105,50);
+      panel2.add(jt1);
    
       plus.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
          //+
          ea++;
          jt.setText(String.valueOf(ea));
+         jt1.setText(String.valueOf("$"+(ea*3090)));
       }
       });
       minus.addActionListener(new ActionListener() {
@@ -159,6 +167,7 @@ public class GucciProduct3 extends JFrame {
          //-
          ea--;
          jt.setText(String.valueOf(ea));
+         jt1.setText(String.valueOf("$"+(ea*3090)));
       }
       });
       
@@ -169,6 +178,8 @@ public class GucciProduct3 extends JFrame {
          public void actionPerformed(ActionEvent e) {
            
         	 buy(product_no, member_no);
+        	 My my = new My();
+             my.setVisible(true);
             
          }
       });

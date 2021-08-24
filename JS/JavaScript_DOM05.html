@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+
+    <style>
+        button {
+            font-size: 30px;
+        }
+    </style>
+
+    <script>
+        function ch() {
+            var n = document.getElementsByTagName("span");   // span태그가 여러개
+
+            for(var i = 0; i < n.length; i++) {
+                var num = n[i];
+                num.style.color = "red";
+            }
+
+        }
+    </script>
+</head>
+
+<body style="font-size: 32px;">
+    <button onclick="ch()">버튼</button><br>
+    붉은색 푸른색 그 사이 <span>3초</span> 그 짧은 시간<br>
+    노란색 빛을 내는 저기 저 <span>신호등</span>이<br>
+    <span>내 머릿속을 텅 비워버려 내가 빠른지도</span><br>
+    느린지도 모르겠어 그저 눈앞이 샛노랄 뿐이야<br>
+    <button onclick="window.location.reload()">초기화</button>
+
+</body>
+
+</html>

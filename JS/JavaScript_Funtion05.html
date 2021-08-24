@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+
+    <script>
+
+        function mon(name, id, n) {
+            this.name = name;
+            this.id = id;
+            this.n = n;
+
+            this.a = function() {
+                return this.n
+            },
+
+            this.plus = function(money) {
+                this.n += money;
+            },
+
+            this.minus = function(money) {
+                this.n -= money;
+            }
+        };
+
+    </script>
+</head>
+<body>
+    <script>
+        var aa = new mon("길동", "Gill", 30000);
+        document.write(aa.name + "<br>");
+
+        aa.plus(1000);
+        document.write(aa.n + "<br>");  // 31000
+
+        aa.minus(5000);
+        document.write(aa.n + "<br>");  // 26000
+    </script>
+    
+</body>
+</html>

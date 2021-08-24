@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <script>
+        function change() {
+            var n = document.getElementById("me");
+            n.style.color = "blue";
+            n.style.fontSize = "40px";
+            n.style.display = "block";
+            n.style.width = "7em";
+            n.style.border = "2px dotted hotpink";
+            n.style.margin = "25px";
+        }
+    </script>
+</head>
+
+<body>
+
+    <p style="color:green">이것은
+        <span id="me" style="color:greenyellow">사람입니다</span>
+    </p>
+
+    <input type="button" value="변경해" onclick="change()">
+
+</body>
+</html>

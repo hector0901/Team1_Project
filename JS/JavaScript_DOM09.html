@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        var Book = new Object();
+        Book.title = "제목";
+        Book.author = "작가";
+        Book.price = 10000;
+
+        var Book2 = {
+            title: "제목2",
+            author: "작가2",
+            price: 20000
+        }
+
+        function Book3(title,author,price){
+            this.title = title;
+            this.author = author;
+            this.price = price;
+        }
+    </script>
+
+</head>
+<body>
+    <script>
+        document.write(Book.title + "<br>");
+        document.write(Book.author + "<br>");
+        document.write(Book.price + "<br>");
+
+        document.write("<br>");
+
+        document.write(Book2.title + "<br>");
+        document.write(Book2.author + "<br>");
+        document.write(Book2.price + "<br>");
+
+        document.write("<br>");
+
+        var b3 = new Book3("제목3", "작가", 30000);
+
+        document.write(b3.title + "<br>");
+        document.write(b3.author + "<br>");
+        document.write(b3.price + "<br>");
+    </script>
+</body>
+
+</html>

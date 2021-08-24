@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <script>
+
+        /*
+        var music = new Object();
+        music.title = "aa";
+        music.singer = "bb";
+        music.price = "333000";
+        */
+
+        /*
+        var music = {
+            title = "AA",
+            singer = "BB",
+            price = 33000,
+        }
+        */
+    
+        function music() {
+            this.title = "aa";
+            this.singer = "bb";
+            this.price = 33000;
+
+            this.t = function() {
+                return this.title
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+    <script>
+        var m = new music();
+        document.write(m.title + "<br>");
+        document.write(m.singer + "<br>");
+        document.write(m.price + "<br>");
+    </script>
+</body>
+</html>

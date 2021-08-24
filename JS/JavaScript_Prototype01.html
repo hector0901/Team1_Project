@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<title>Document</title>
+
+<script>
+
+    function student(name,score){
+
+        this.name=name;
+
+        this.score=score;
+
+        this.getgrade=function(){
+
+            if(this.score>=90)
+
+                return "A";
+
+            else if(this.score>=80)
+
+                return "B";
+
+            else
+
+                return "F";
+
+        }
+
+    }
+
+//프로토타입으로 -> 90점 이상이면 A 80점 이상이면 B 그 이외 F
+
+</script>
+
+</head>
+
+<body>
+
+<script>
+    var a=new student("juli",60);
+    var b=new student("tom",100);
+
+    document.write(a.name+"학점"+a.getgrade());
+    document.write(b.name+"학점"+b.getgrade());
+</script>
+
+</body> 
+
+</html>

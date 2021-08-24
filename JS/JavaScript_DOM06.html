@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+
+    <style>
+        div {
+            display: inline-block;
+            width: 100px;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        var ary = ['red', 'orange', 'blue', 'pink', 'yellow'];
+
+        for(var i = 0; i < ary.length; i++) {
+            var str = "<div style='background-color: " ;
+            str += ary[i];
+            str += "'>" + ary[i] + "</div>";
+            document.write(str);
+        }
+    
+    </script>
+    
+</body>
+</html>

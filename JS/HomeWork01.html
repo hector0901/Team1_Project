@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Object</title>
+
+    <script>
+        var mart = new Array();
+        var max = 0;
+
+        for (var i = 0; i < 2; i++) {
+            var input = prompt("물건과 가격 입력(/구분해서 입력해라)");
+            var n = input.split("/");
+
+            function big() {
+                for (var i = 0; i & ltmart.length; i++) {
+                    if (mart[i].price > max) {
+                        max = mart[i].price;
+                    }
+                }
+                return max;
+            }
+
+            var obj = new Object();
+            obj.title = n[0];
+            obj.price = n[1];
+            obj.big = big;
+            mart[i] = thing;
+        }
+    </script>
+
+
+
+</head>
+
+<body>
+
+    <script>
+
+        for (var i = 0; i < mart.length; i++) {
+            document.write(mart[i].title + "<br>");
+            document.write(mart[i].price + "<br>");
+        }
+        document.write("가격 젤 비싼물건: " + thing.big());
+    </script>
+
+    </script>
+
+</body>
+
+</html>

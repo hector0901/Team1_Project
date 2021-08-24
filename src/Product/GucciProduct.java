@@ -25,8 +25,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Beans.BuyVO;
+import Beans.MemberVO;
 import DB_Tool.DBClose;
 import DB_Tool.DBOpen;
+import Main.main;
+import Member.My;
 
 public class GucciProduct extends JFrame {
 
@@ -40,8 +43,8 @@ public class GucciProduct extends JFrame {
 	DBClose dbclose = new DBClose();
 
 	// Buy Beans
-	BuyVO buyVO = new BuyVO();
-
+	BuyVO buyVO = new BuyVO(); 
+	
 	// 회원번호 1고정, 상품번호는 각 상품마다 1~6으로 따로 지정
 	// 1번 상품
 	int member_no = 1;
@@ -142,21 +145,29 @@ public class GucciProduct extends JFrame {
 		panel2.add(plus);
 		panel2.add(minus);
 		panel2.add(jt);
+		jt.setText("0");
 
-		plus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// +
-				ea++;
-				jt.setText(String.valueOf(ea));
-			}
-		});
-		minus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// -
-				ea--;
-				jt.setText(String.valueOf(ea));
-			}
-		});
+		 JLabel jt1=new JLabel("$ 0");//가격
+	      jt1.setFont(new Font("맑은 고딕",Font.BOLD,30));
+	      jt1.setBounds(1393,450,105,50);
+	      panel2.add(jt1);
+	   
+	      plus.addActionListener(new ActionListener() {
+	         public void actionPerformed(ActionEvent e) {
+	         //+
+	         ea++;
+	         jt.setText(String.valueOf(ea));
+	         jt1.setText(String.valueOf("$"+(ea*1480)));
+	      }
+	      });
+	      minus.addActionListener(new ActionListener() {
+	         public void actionPerformed(ActionEvent e) {
+	         //-
+	         ea--;
+	         jt.setText(String.valueOf(ea));
+	         jt1.setText(String.valueOf("$"+(ea*1480)));
+	      }
+	      });
 
 		String CNT = jt.getText();
 
@@ -165,6 +176,9 @@ public class GucciProduct extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			
 				 buy(product_no, member_no);
+				 
+				 My my = new My();
+				 my.setVisible(true);
 
 			}
 		});
@@ -188,9 +202,6 @@ public class GucciProduct extends JFrame {
 		 */
  	public int buy(int product_no, int member_no) {
  		int count = 0; // 등록된 레코드 갯수
- 		
- 		product_no = 1;
- 		member_no = 1;
 
  		try {
  			con = this.dbopen.getConnection();

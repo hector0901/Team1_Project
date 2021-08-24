@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Cafe08</title>
+</head>
+
+<body>
+
+    <script>
+        var ary = new Array();
+        var max = 0;
+
+        for (var i = 0; i < 10; i++) {
+            ary[i] = Math.floor(Math.random() * 100) + 1
+            if (max < ary[i]) {
+                max = ary[i];
+            }
+            document.write(ary[i] + " ");
+        }
+
+        document.write("<br>");
+        document.write("최대값: " + max + "<br>");
+
+        /////////////////////////////////////////////////////////////////////////////////////// 
+
+        for (var i = 0; i < ary.length; i++) { //0~9
+            ary[i] = parseInt((Math.random() * 100) + 1);
+            document.write(ary[i] + " ");
+        }
+        ary.sort(); //오름차순 1 2 3 4 5 6 7 8 9 10
+        document.write("<br>");
+        document.write("최대값: " + ary[ary.length - 1]);
+    </script>
+
+</body>
+
+</html>

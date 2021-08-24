@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ArrayList</title>
+
+    <script>
+        function print(str) {
+            document.writeln(str + "<br>");
+        }
+
+        function week_array() {
+            var week = ["월", "화", "수", "목", "금", "토", "일"];     // ArrayList => 코어객체
+
+            for (var i = 0; i < week.length; i++) {
+                print(week[i]);
+            }
+
+        }
+
+
+    </script>
+</head>
+
+<body>
+
+    <script>
+        document.body.style.backgroundColor="aqua";
+        week_array();
+    </script>
+    
+    <!-- /////////////////////////////////////////////////////////////////////////////// -->
+
+    <script>
+        var p = [1, 2, 3, 4, 5];
+
+        for (var i = 0; i < p.length; i++) {
+            document.write(p[i] + "<br>");
+        }
+
+        var v = new Array();
+        v[0] = 10;
+        v[1] = 20;
+        v[2] = 30;
+
+        var tot = 0;
+        var count = 0;
+
+        for (var i = 0; i < v.length; i++) {
+            tot = tot + v[i];    // 합    
+            count++;             // 갯수 
+        }
+
+        document.write("평균: " + tot / count + "<br>");
+    </script>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////// -->
+
+    <script>
+        var n = new Array(1, 2, 3, 4, 5);
+        document.write("n의 길이: " + n.length + "<br>");
+
+        var m = new Array(5);
+        document.write("m의 길이: " + m.length + "<br>");
+    </script>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////// -->
+
+    <script>
+        var x = new Array("스", "크", "립");
+        var y = new Array("트");
+        var z;
+
+        z = x.concat(y);
+        document.write(z + "<br>");  // 스,크,립,트
+
+        z = x.join("@@");
+        document.write(z + "<br>");  // 스@@크@@립
+
+        z = x.reverse();
+        document.write(z + "<br>");  // 립,크,스
+
+        z = x.sort();                // 오름차순 정렬
+        document.write(z + "<br>");  // 립,스,크 => ㄱㄴㄷㄻㅄㅇㅈㅊㅋㅌㅍㅎ
+
+        z = x.slice(1,2);            // 인덱스 1부터 2미만 => 1
+        document.write(z + "<br>");  // 스 => 위에있는 립,스,크가 기준 따라서 1   
+
+        z = x.toString();            
+        document.write(z + "<br>");    
+    </script>
+
+    <!-- /////////////////////////////////////////////////////////////////////////////// -->
+    <!-- 위의 결과와 동일-->
+
+    <script>
+        var a = ["스", "크", "립"];
+        var b;
+
+        b = a.join("@@");
+        document.write(b + "<br>");
+
+        b = a.reverse();
+        document.write(b + "<br>");  // 립,크,스
+
+        b = a.sort();                // 오름차순 정렬
+        document.write(b + "<br>");  // 립,스,크 => ㄱㄴㄷㄻㅄㅇㅈㅊㅋㅌㅍㅎ
+
+        b = a.slice(1,2);            // 인덱스 1부터 2미만 => 1
+        document.write(b + "<br>");  // 스 => 위에있는 립,스,크가 기준 따라서 1   
+
+        b = a.toString();            
+        document.write(b + "<br>");    
+    </script>
+
+</body>
+</html>

@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import Beans.BuyVO;
 import DB_Tool.DBClose;
 import DB_Tool.DBOpen;
+import Member.My;
 
 public class PradaProduct2 extends JFrame {
 	Connection con = null;
@@ -111,7 +112,7 @@ public class PradaProduct2 extends JFrame {
       text2.setBounds(1200, 350,600,50);
       
       //»óÇ°¹øÈ£
-      JLabel j4=new JLabel("no.2");
+      JLabel j4=new JLabel("no.5");
       j4.setFont(new Font("¸¼Àº °íµñ",Font.BOLD,20));
       j4.setBounds(250, 20, 100, 40);  
       
@@ -147,13 +148,20 @@ public class PradaProduct2 extends JFrame {
       panel2.add(plus);
       panel2.add(minus);
       panel2.add(jt);
+      jt.setText("0");
    
+   
+      JLabel jt1=new JLabel("$ 0");//°¡°Ý
+      jt1.setFont(new Font("¸¼Àº °íµñ",Font.BOLD,30));
+      jt1.setBounds(1393,450,105,50);
+      panel2.add(jt1);
    
       plus.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
          //+
          ea++;
          jt.setText(String.valueOf(ea));
+         jt1.setText(String.valueOf("$"+(ea*2960)));
       }
       });
       minus.addActionListener(new ActionListener() {
@@ -161,6 +169,7 @@ public class PradaProduct2 extends JFrame {
          //-
          ea--;
          jt.setText(String.valueOf(ea));
+         jt1.setText(String.valueOf("$"+(ea*2960)));
       }
       });
       
@@ -171,6 +180,8 @@ public class PradaProduct2 extends JFrame {
          public void actionPerformed(ActionEvent e) {
          
         	 buy(product_no, member_no);
+        	 My my = new My();
+             my.setVisible(true);
         	 
          }
       });

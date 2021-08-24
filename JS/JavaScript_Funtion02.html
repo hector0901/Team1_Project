@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Function</title>
+
+    <script>
+
+        function max(a, b) {
+            return a + b;
+        }
+        
+    </script>
+</head>
+<body>
+
+    <script>
+
+        var a = prompt("첫번째 정수를 입력하세요.", 0);
+        var b = prompt("두번째 정수를 입력하세요.", 0);
+
+        a = parseInt(a);
+        b = parseInt(b);
+
+        var n = max(a, b);
+
+        if (a == "" || b == "" || a == null || b == null) {
+            document.write("값을 입력해주세요.");
+        } else {
+            document.write("두 수의 합: ");
+            document.write(n);
+        }
+
+    </script>
+    
+</body>
+</html>

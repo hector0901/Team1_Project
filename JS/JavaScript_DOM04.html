@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        function on(obj,color,size){
+            obj.style.color=color;
+            obj.style.fontSize=size;
+        }
+
+        function on2(obj,color,size){
+            var n = document.getElementById("a");
+            n.style.color = color;
+            n.style.fontSize = size;
+            n.innerHTML="버튼변경";
+        }
+
+
+    </script>
+</head>
+<body>
+
+    <button onclick="on(this,'green','30px')">버튼1</button>
+    <button onclick="on(this,'pink','30px')">버튼2</button>
+    <div onclick="on(this,'tomato','40px')">변경</div>
+
+    <button id="a" onclick="on2(this,'green','30px')">버튼3</button>
+
+</body>
+
+</html>
+

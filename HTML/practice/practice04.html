@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>프런트엔드 개발자 지원서</title>
+    <style>
+		#div { 
+			width:600px;
+			border:1px solid black;
+			padding: 40px;
+			margin: 40px auto;
+		}
+		ul {
+			list-style-type: none;
+		}
+		li {line-height: 30px;
+		}
+		hr, textarea {
+			border-style: dashed;
+		}
+		#name, #tel {
+			border: 1px;
+			border-style: dashed;
+		}
+    </style>
+  </head>
+  <body>
+		<div id="div">
+			<h1>프런트엔드 개발자 지원서 </h1>
+			<p>HTML, CSS, Javascript에 대한 기술적 이해와 경험이 있는 분을 찾습니다.</p>
+
+			<hr>
+
+			<form>
+				<h3>개인정보</h3>
+					<ul>
+						<li>
+							<label for="name">이름</label>
+							<input type="text" id="name" placeholder="공백없이 입력하세요" autofocus>
+						</li>
+						<li>
+							<label for="tel"> 연락처 </label>
+							<input type="tel" id="tel">
+						</li>
+					</ul>
+					
+				<h3>지원 분야</h3>
+				<ul>
+					<li>
+						<label>
+							<input type="radio" name="area" value="web">웹 퍼블리싱
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="radio" name="area" value="dev">웹 애플리케이션 개발
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="radio" name="area" value="impro">개발 환경 개선
+						</label>
+					</li>
+				</ul>
+
+				<h3>지원 동기</h3>
+				<label>
+					<textarea cols="60" rows="5" placeholder="본사 지원 동기를 간략히 써 주세요." required></textarea>
+				</label>
+
+				<div>
+					<input type="submit" value="접수하기">
+					<input type="reset" value="다시 쓰기">
+				</div>
+			</form>
+		</div>
+  </body>
+</html>

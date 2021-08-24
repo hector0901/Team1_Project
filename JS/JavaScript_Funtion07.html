@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <script>
+
+        var mart = new Array();
+        var max = 0;
+
+        for (var i = 0; i < 2; i++) {
+            var input = prompt("물건과 가격입력(/구분해서 입력해라");
+            var n = input.split("/");
+
+            var thing = {
+                title: n[0],
+                price: n[1],
+
+                big: function () {
+                    for (var i = 0; i < mart.length; i++) {
+                        if (mart[i].price > max) {
+                            max = mart[i].price;
+                        }
+                    }
+                    return max;
+                }
+            }
+            mart[i] = thing;
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <script>
+
+        for (var i = 0; i < mart.length; i++) {
+            document.write(mart[i].title + "<br>");
+            document.write(mart[i].price + "<br>");
+        }
+
+        document.write("가격 젤 비싼 물건" + thing.big());
+    </script>
+
+</body>
+
+</html>

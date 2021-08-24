@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+
+    <script>
+        function cal(dan) {
+
+            if (isNaN(dan)) {
+                window.alert("정수를 입력하세요.")
+                return;
+            } else if (dan == null || dan == "") {
+                document.write("값이 입력되지 않았습니다.");
+            } else {
+                var num = parseInt(dan);
+
+                for (var i = 1; i <= 9; i++) {
+                    document.write(dan + " * " + i + " = " + (num * i) + "<br>");
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <script>
+        window.alert("구구단 계산이 시작됩니다.");
+        var dan = prompt("단수를 입력하세요", 0);
+        cal(dan);
+    </script>
+
+</body>
+
+</html>

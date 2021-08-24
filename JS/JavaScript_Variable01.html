@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Variable</title>
+</head>
+
+<body>
+
+    <script>
+        var x = 30;          // 30
+        var y = x / 10;      // 3
+        var z = x % 5;       // 0
+
+        document.write(x + "<br>");
+        document.write(y + "<br>");
+        document.write(z + "<br>");
+
+        document.write("x = " + x + " y = " + y + " z = " + z + "<br><br>");
+
+        x += 5;              // 35
+        y *= 5;              // 15
+        z %= 2;              // 0
+
+        document.write(x + "<br>");
+        document.write(y + "<br>");
+        document.write(z + "<br>");
+
+        document.write("x = " + x + " y = " + y + " z = " + z + "<br><br>");
+
+        x = 10;
+        y = 20;
+
+        document.write((x==y) + "<br>")
+        document.write((x!=y) + "<br>")
+        document.write((x<y) + "<br>")
+        document.write((x>y) + "<br><br>")
+
+        var a = true;
+        var b = false;
+
+        document.write((a&&b) + "<br>");
+        document.write((a||b) + "<br>");
+        document.write((!a) + "<br>");
+        document.write((!b) + "<br>");
+        document.write((3>2)&&(4>5) + "<br>");
+        document.write((3==4)||(-3<0) + "<br><br>");
+
+        var num1 = 5;
+        var num2 = 10;
+
+        document.write((a>b) ? a : b);
+        document.write("<br><br>");
+
+        var str1 = "abc" + "de";
+        document.write(str1 + "<br><br>");
+
+        var str2 = 1+2+"abc"
+        document.write(str2 + "<br><br>");
+
+        var str3 = "abc"+1+2
+        document.write(str3 + "<br><br>");
+
+        var name1 = "길동1"
+        document.write(name1 == "길동1");
+        document.write("<br><br>");
+
+        var name2 = "길동2"
+        document.write(name1 > name2);
+        document.write("<br><br>");
+    </script>
+
+</body>
+</html>

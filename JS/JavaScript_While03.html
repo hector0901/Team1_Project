@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>While</title>
+</head>
+<body>
+
+    <script>
+
+        var i = 0;
+        var sum = 0;
+
+        // 1 ~ n까지 더했을때 5000이 넘을때의 n의 값 출력
+        while(true) {
+
+
+            // 총합
+            sum = sum + i;
+            
+            // 총합이 5000이 넘으면 종료
+            if(sum > 5000) {
+                break;
+            }
+
+            // 그 전까지 1, 2, 3..... ++
+            i++;
+
+        }
+
+        document.write(i + " ");
+        document.write(sum);
+
+    </script>
+    
+</body>
+</html>

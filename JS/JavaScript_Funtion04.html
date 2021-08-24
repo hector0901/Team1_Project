@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <script>
+
+        //리터럴 표기법
+        var n = {
+            name: "지현",
+            id: "123",
+            money: 5000,
+
+            a: function () {
+                return this.money;
+            },
+
+            plus: function (num) {
+                this.money += num;
+            },
+
+            minus: function (num) {
+                this.money -= num;
+            }
+        };
+    </script>
+
+</head>
+
+<body>
+
+    <script>
+
+        n.plus(5000);
+        document.write(n.a() + "<br>");
+
+        n.minus(4000);
+        document.write(n.a() + "<br>");
+
+    </script>
+
+</body>
+
+</html>

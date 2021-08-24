@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cafe02</title>
+
+    <script>
+        function day(today) {
+            var today = prompt("월 ~ 수요일 중 하나를 입력하세요.", "")
+
+            if(today == "월요일" || today == "화요일") {
+                document.write("출근");     
+            } else if(today == "수요일") {
+                document.write("휴식");  
+            } else {
+                document.write("월~수요일 사이의 값을 입력하세요.");  
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <script>
+        day();
+    </script>
+    
+</body>
+</html>

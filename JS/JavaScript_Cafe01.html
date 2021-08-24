@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Cafe</title>
+</head>
+
+<body>
+
+    <script>
+        document.write("<table border='1' style='border-collapse: collapse; text-align: center;' width=30%; height=10%;");
+        document.write("<tr>");
+        document.write("<th>");
+        document.write("n");
+        document.write("</th>");
+
+        for(var i = 0; i < 5; i++) {
+            document.write("<td>");
+                document.write(i);
+            document.write("</td>");
+        }
+
+        document.write("</tr>");
+
+        document.write("<th>");
+        document.write("n<sup>2<sup>");
+        document.write("</th>");
+
+        for(var i = 0; i < 5; i++) {
+            document.write("<td>");
+                document.write(i * i);
+            document.write("</td>");
+        }
+        
+        document.write("</tr>");
+        document.write("</table>")
+    </script>
+
+
+
+</body>
+
+</html>
