@@ -109,6 +109,7 @@ public class main extends JFrame {
   Notice_customer notice_customer = new Notice_customer();
   Notice notice_function = new Notice();
   
+  String ID = id.getText().trim();
 
   public main() {
 
@@ -564,10 +565,10 @@ public class main extends JFrame {
 
         enter.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
-             String ID = id.getText().trim();
+
             id_check(ID);
-            
             create(memberVO);
+            
           }
 
         });
@@ -870,14 +871,11 @@ public class main extends JFrame {
             pradacon.add(pcenter);
 
             ImageIcon pradaI1 = new ImageIcon(".//image//프라다 플라쥬 위커 및 캔버스 버킷백.png");
-
             ImageIcon pradaI2 = new ImageIcon(".//image//클레오 브러시드 가죽 숄더.png");
-
             ImageIcon pradaI3 = new ImageIcon(".//image//크롭 셰틀랜드 울 카디건.png");
 
             // 상품 1
             JLabel prada1 = new JLabel(pradaI1);
-
             JLabel prada1name = new JLabel("프라다 플라쥬 위커 및 캔버스 버킷백");
 
             Font font5 = new Font("맑은 고딕 Semilight", Font.BOLD, 18);
@@ -1120,7 +1118,7 @@ public class main extends JFrame {
       pstmt.setString(5, ADDRESS);
 
       if (ID.length() < 6 || ID.length() >= 16 || PW.length() >= 16 || PW.length() < 8 || NAME.length() == 0
-          || !(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0) {
+          || !(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0 || id_check(ID) == true) {
         JOptionPane.showMessageDialog(null, "회원가입 실패, 다시 시도해 주세요.");
       } else {
         count = pstmt.executeUpdate(); // SQL 실행

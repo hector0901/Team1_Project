@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -32,6 +33,9 @@ import DB_Tool.DBOpen;
 import Member.My;
 
 public class PradaProduct3 extends JFrame {
+  
+  DecimalFormat df = new DecimalFormat("###,###,###,###,###");
+  
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -144,7 +148,7 @@ public class PradaProduct3 extends JFrame {
 		jt.setText("0");
 
 		JLabel jt1=new JLabel("$ 0");//°¡°Ý
-        jt1.setFont(new Font("¸¼Àº °íµñ",Font.BOLD,30));
+        jt1.setFont(new Font("¸¼Àº °íµñ",Font.BOLD,25));
         jt1.setBounds(1393,450,105,50);
         panel2.add(jt1);
      
@@ -153,7 +157,7 @@ public class PradaProduct3 extends JFrame {
            //+
            ea++;
            jt.setText(String.valueOf(ea));
-           jt1.setText(String.valueOf("$"+(ea*1990)));
+           jt1.setText(String.valueOf("$"+(df.format(ea*1990))));
         }
         });
         minus.addActionListener(new ActionListener() {
@@ -161,7 +165,7 @@ public class PradaProduct3 extends JFrame {
            //-
            ea--;
            jt.setText(String.valueOf(ea));
-           jt1.setText(String.valueOf("$"+(ea*1990)));
+           jt1.setText(String.valueOf("$"+(df.format(ea*1990))));
         }
         });
 

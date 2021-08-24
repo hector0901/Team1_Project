@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,6 +34,8 @@ import Member.My;
 
 public class GucciProduct extends JFrame {
 
+  DecimalFormat df = new DecimalFormat("###,###,###,###,###");
+  
   //DB°ü·Ã º¯¼öµé
 	Connection con = null;
 	PreparedStatement pstmt = null;
@@ -148,7 +151,7 @@ public class GucciProduct extends JFrame {
 		jt.setText("0");
 
 		 JLabel jt1=new JLabel("$ 0");//°¡°Ý
-	      jt1.setFont(new Font("¸¼Àº °íµñ",Font.BOLD,30));
+	      jt1.setFont(new Font("¸¼Àº °íµñ",Font.BOLD,25));
 	      jt1.setBounds(1393,450,105,50);
 	      panel2.add(jt1);
 	   
@@ -157,7 +160,7 @@ public class GucciProduct extends JFrame {
 	         //+
 	         ea++;
 	         jt.setText(String.valueOf(ea));
-	         jt1.setText(String.valueOf("$"+(ea*1480)));
+	         jt1.setText(String.valueOf("$"+(df.format(ea*1480))));
 	      }
 	      });
 	      minus.addActionListener(new ActionListener() {
@@ -165,7 +168,7 @@ public class GucciProduct extends JFrame {
 	         //-
 	         ea--;
 	         jt.setText(String.valueOf(ea));
-	         jt1.setText(String.valueOf("$"+(ea*1480)));
+	         jt1.setText(String.valueOf("$"+(df.format(ea*1480))));
 	      }
 	      });
 
