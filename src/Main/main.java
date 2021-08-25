@@ -109,7 +109,6 @@ public class main extends JFrame {
   Notice_customer notice_customer = new Notice_customer();
   Notice notice_function = new Notice();
   
-  String ID = id.getText().trim();
 
   public main() {
 
@@ -565,10 +564,10 @@ public class main extends JFrame {
 
         enter.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
-
+             String ID = id.getText().trim();
             id_check(ID);
-            create(memberVO);
             
+            create(memberVO);
           }
 
         });
@@ -871,11 +870,14 @@ public class main extends JFrame {
             pradacon.add(pcenter);
 
             ImageIcon pradaI1 = new ImageIcon(".//image//프라다 플라쥬 위커 및 캔버스 버킷백.png");
+
             ImageIcon pradaI2 = new ImageIcon(".//image//클레오 브러시드 가죽 숄더.png");
+
             ImageIcon pradaI3 = new ImageIcon(".//image//크롭 셰틀랜드 울 카디건.png");
 
             // 상품 1
             JLabel prada1 = new JLabel(pradaI1);
+
             JLabel prada1name = new JLabel("프라다 플라쥬 위커 및 캔버스 버킷백");
 
             Font font5 = new Font("맑은 고딕 Semilight", Font.BOLD, 18);
@@ -1076,8 +1078,8 @@ public class main extends JFrame {
       // 변수별 유효성 검사
       String regExp = "^[0-9]+$";
 
-      if (ID.length() < 6) {
-        JOptionPane.showMessageDialog(null, "아이디는 6글자 이상 입력해주세요");
+      if (ID.length() == 0) {
+        JOptionPane.showMessageDialog(null, "아이디가 입력되지 않았습니다.");
         id.setText("");
       } else if (ID.length() >= 16) {
         JOptionPane.showMessageDialog(null, "아이디는 16글자 이하로 입력해주세요");
@@ -1117,10 +1119,10 @@ public class main extends JFrame {
       pstmt.setString(4, PHONE);
       pstmt.setString(5, ADDRESS);
 
-      if (id_check(ID) == true || ID.length() < 6 || ID.length() >= 16 || PW.length() >= 16 || PW.length() < 8 || NAME.length() == 0
+      if (ID.length() == 0 || ID.length() >= 16 || PW.length() >= 16 || PW.length() < 8 || NAME.length() == 0
           || !(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0) {
         JOptionPane.showMessageDialog(null, "회원가입 실패, 다시 시도해 주세요.");
-      }  else {
+      } else {
         count = pstmt.executeUpdate(); // SQL 실행
 
         JOptionPane.showMessageDialog(null, "회원가입 완료");

@@ -517,7 +517,6 @@ public class My extends JFrame {
 
   /**
    * 회원 레코드 수정
-   * 
    * @param memberVO
    * @return
    */
