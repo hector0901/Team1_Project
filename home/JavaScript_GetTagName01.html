@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p id="p">Hi1</p>
+    <p id="p">Hi2</p>
+
+    <input type="button" value="버튼" onclick="on()">
+
+    <span id="one" onclick="this.style.color='blue'">자바스크립트</span>
+
+    <script>
+        function on() {
+            var n = document.getElementsByTagName("p");
+
+            for (var i = 0; i < n.length; i++) {
+                var a = n[i];
+                a.style.color = "green";
+                a.style.border = "3px solid magenta";
+                a.innerHTML = "z";
+            }
+        }
+
+        var x = document.getElementById("one");
+        x.innerHTML="CSS";
+
+    </script>
+</body>
+</html>

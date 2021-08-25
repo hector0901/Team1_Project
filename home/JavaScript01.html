@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+
+    <script>
+        var n;
+        function color() {
+            n = document.getElementById("aa");
+            n.ondblclick = function() {
+                this.style.backgroundColor = "blue";
+            }
+            n.addEventListener("mouseout",
+                function() {   
+                    this.style.backgroundColor = "orange"; 
+                } 
+            );
+        }
+    </script>
+
+</head>
+<body onload="color()">
+    <p id="aa">이벤트</p>
+</body>
+</html>

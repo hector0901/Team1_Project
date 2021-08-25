@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+
+    <script>
+        function addr() {
+            var result = document.getElementById("addr");  
+            var add = document.getElementsByName("n")[0].value + ', ' +
+                      document.getElementsByName("t")[0].value
+
+            var item = document.createElement("li");
+            var node = document.createTextNode(add);
+
+            item.appendChild(node);
+            result.appendChild(item);
+
+        }
+
+        function re() {
+            document.getElementById("addr").innerHTML="";  
+
+        }
+    </script>
+</head>
+<body>
+
+    이름<input type="text" name="n"><br>
+    전화번호<input type="tel" name="t"><br>
+    <input type="button" value="저장" onclick="addr()">
+    <input type="button" value="리셋" onclick="re()">
+
+    <ul id="addr">
+
+    </ul>
+    
+</body>
+</html>

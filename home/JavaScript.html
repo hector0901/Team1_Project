@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        var a = "123";
+        var b = "45"
+        
+        a+=b // a = a + b
+
+        document.write(a + "<br>");      // 12345
+
+        ///////////////////////////
+
+        a = "123";
+        b = "45";
+
+        a = parseInt(a) + parseInt(b);
+        document.write(a + "<br>");      // 168
+
+        ///////////////////////////
+
+        a = "123";
+        b = "45";
+
+        a = 10 + a + b;                  // 1012345
+
+        document.write(a + "<br>");
+
+        ///////////////////////////
+
+        a = "123";
+        b = "45";
+
+        b = 10 + parseInt(a) + "abc";    // 10 + 45 + abc => 133abc  
+        document.write(b + "<br>");      
+
+
+    </script>
+
+    
+</body>
+</html>

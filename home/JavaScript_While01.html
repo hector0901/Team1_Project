@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+
+    <style>
+        #a {
+            color: green;
+        }
+    </style>
+
+    <script>
+        function cal() {
+            var i = 1;
+            var even = 0;
+
+            while(i <= 20) {
+
+                if(i % 2 == 0) {
+                    document.write("<span style='color: red;'>"+  i + " " + "</span>");
+                }
+                i++;
+            }
+        }
+
+        function cal2() {
+            var i = 1;
+            var even = 0;
+
+            while(i <= 20) {
+
+                if(i % 2 == 0) {
+                    document.write("<span id='a'>" + i + " ");
+                }
+                i++;
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <script>
+        cal();  
+        cal2();  
+    </script>
+
+</body>
+</html>

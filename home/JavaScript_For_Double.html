@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        document.write("<table border='1' style='border-collapse: collapse; text-align: center;' width=30%; height=10%;");
+        var i = 1;
+        for (var r = 1; r <= 5; r++) {
+            document.write("<tr>");
+            for (var c = 1; c <= 5; c++) {
+                document.write("<td>" + i + "</td>");
+                i++;
+            }
+            document.write("</tr>");
+        }
+        document.write("</table>");
+    </script>
+
+</body>
+</html>

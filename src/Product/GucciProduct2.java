@@ -170,12 +170,13 @@ public class GucciProduct2 extends JFrame {
 	      }
 	      });
 
+	  // 상품구매
 		jb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				 buy(product_no, member_no);
 				 My my = new My();
-                 my.setVisible(true);
+         my.setVisible(true);
 
 			}
 		});

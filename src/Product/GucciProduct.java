@@ -171,18 +171,12 @@ public class GucciProduct extends JFrame {
 	         jt1.setText(String.valueOf("$"+(df.format(ea*1480))));
 	      }
 	      });
-
-		String CNT = jt.getText();
-
+	      
 		// 상품구매
 		jb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
 				 buy(product_no, member_no);
-				 
-				 My my = new My();
-				 my.setVisible(true);
-
 			}
 		});
 
@@ -205,7 +199,8 @@ public class GucciProduct extends JFrame {
 		 */
  	public int buy(int product_no, int member_no) {
  		int count = 0; // 등록된 레코드 갯수
-
+ 		My my;
+ 		
  		try {
  			con = this.dbopen.getConnection();
 
@@ -224,21 +219,26 @@ public class GucciProduct extends JFrame {
  			pstmt.setInt(2, member_no);
  			pstmt.setInt(3, cnt);
  			
- 			rs = pstmt.executeQuery(); 
- 			
  			if (CNT == null) {
  				JOptionPane.showMessageDialog(null, "수량를 입력해주세요");
  				jt.setText("");
+ 				my = new My();
+ 				my.setVisible(false);
  			}
  			if (cnt <= 0) {
  				JOptionPane.showMessageDialog(null, "주문은 1개이상부터 가능합니다");
  				jt.setText("0");
+ 				my = new My();
+ 				my.setVisible(false);
  			}
- 			if (cnt <= 0 || CNT == null || !(CNT.matches(regExp))) {
+ 			if (cnt <= 0  || CNT == null || !(CNT.matches(regExp))) {
  				JOptionPane.showMessageDialog(null, "구매 실패, 다시 시도해 주세요.");
  			} else {
+ 				rs = pstmt.executeQuery(); 
  				JOptionPane.showMessageDialog(null, "주문이 완료 되었습니다!", "주문 완료", JOptionPane.INFORMATION_MESSAGE);
  				jt.setText("");
+ 				my = new My();
+ 				my.setVisible(true);
  				dispose();
  			}
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+
+    <script>
+        function on() {
+            var n = document.getElementById("a");
+            var m = document.createElement("span");
+            m.innerHTML = "<br> p태그(부모) 안에 span태그(자식) 추가 <br>" ;
+            n.appendChild(m);
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <p id="a">이벤트</p>
+    <input type="button" onclick="on()" value="클릭">
+
+</body>
+
+</html>

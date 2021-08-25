@@ -1117,10 +1117,10 @@ public class main extends JFrame {
       pstmt.setString(4, PHONE);
       pstmt.setString(5, ADDRESS);
 
-      if (ID.length() < 6 || ID.length() >= 16 || PW.length() >= 16 || PW.length() < 8 || NAME.length() == 0
-          || !(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0 || id_check(ID) == true) {
+      if (id_check(ID) == true || ID.length() < 6 || ID.length() >= 16 || PW.length() >= 16 || PW.length() < 8 || NAME.length() == 0
+          || !(PHONE.length() == 10 || PHONE.length() == 11) || ADDRESS.length() == 0) {
         JOptionPane.showMessageDialog(null, "회원가입 실패, 다시 시도해 주세요.");
-      } else {
+      }  else {
         count = pstmt.executeUpdate(); // SQL 실행
 
         JOptionPane.showMessageDialog(null, "회원가입 완료");

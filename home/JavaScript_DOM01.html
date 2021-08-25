@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p id="p"> Hi
+        <input type="button" value="버튼" onclick="on()">
+        <input type="button" value="버튼2" onclick="p.style.color='blue'">
+
+        <script>
+            var n = document.getElementById("p");
+            n.style.color = "red";
+            function on() {
+                var n = document.getElementById("p");
+                n.style.color = "green";
+                n.style.border = "3px solid magenta";
+                n.innerHTML = "ㅋ";
+
+            }
+        </script>
+
+    </p>
+
+
+</body>
+
+</html>

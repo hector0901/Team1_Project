@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+
+    <script>
+
+        var n = "hidden";
+        function ch() {
+            if (n == "hidden") {
+                n = "visible";
+            } else {
+                n = "hidden";
+            }
+            var v = document.querySelectorAll("span");
+
+            for (var i of v) {
+                i.style.visibility = n;
+
+            }
+
+        }
+
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <button type="button" onclick="ch();">button</button>
+
+    <hr>
+
+    <ul>
+        <li>I(<span>love</span>)you</li>
+        <li>마스크착용(<span>의무화</span>)</li>
+    </ul>
+
+
+</body>
+
+</html>

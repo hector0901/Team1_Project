@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+
+    <script>
+        function answer() {
+            var n = document.getElementById("a");
+            n.value = eval(1 + 2 + 3);
+        }
+    </script>
+</head>
+
+<body>
+
+    <p>
+        1 + 2 + 3 = 
+        <input type="button" id="a" onclick="answer();" value="답">
+        <button onclick="window.location.reload()">초기화</button>
+    </p>
+
+</body>
+
+</html>

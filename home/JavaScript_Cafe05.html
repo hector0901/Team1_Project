@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+
+    3. Prompt() 함수를 이용하여 문자열을 입력해 “,” 를 기준으로 문자를 분할하여 출력해라.
+    <br>
+    <script>
+        var str = prompt("문자열 입력을 입력하세요 ,를 기준으로 구분됩니다.");
+        var area = str.split(",");
+
+        for (var i = 0; i < area.length; i++) {
+            document.write(area[i] + "<br>");
+        }
+    </script>
+
+    <br>
+    4. 오늘 날짜 시간을 출력해라. <br>
+    (2020. 8. 28 오전 10:10:10 이러한 식으로 출력) <br>
+
+    <script>
+        var time = new Date();
+        document.write("답: " + time.toLocaleDateString() + " " + time.toLocaleTimeString() + "<br>");
+    </script>
+
+    <br>
+    4.1) Date 객체로 년, 월, 일도 각각 출력해라. <br>
+    <script>
+        document.write("답: " + time.getFullYear() + "년 " + time.getMonth() + "월 " + time.getDate() + "일 <br>");
+    </script>
+
+    <br>
+    5. “자신이 하는 일을 좋아하게 되는 것”이라는 문자열을 주고 “변경”이라는 버튼을 클릭했을 때 문자열의 “좋아하게”되는 부분의 색은 violet, width는 4em, block형태로 변경해라.
+
+    <p>자신이 하는 일을 <span id="s">좋아하게</span> 되는 것</p>
+    <input type="button" onclick="color()" value="변경">
+
+    <script>
+        function color() {
+            var n = document.getElementById("s");
+            n.style.color = "violet";
+            n.style.width = "4em";
+            n.style.display = "block";
+        }
+    </script>
+
+
+</body>
+
+</html>
