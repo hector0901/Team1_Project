@@ -177,15 +177,18 @@ public class PradaProduct2 extends JFrame {
       }
       });
       
-      
-      
+      if(member_no == 0) {
+        jb1.setVisible(false);
+      }
+
       //상품구매
       jb1.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
          
-        	 buy(product_no, member_no);
-        	 My my = new My();
+             buy(product_no, member_no);
+             My my = new My();
              my.setVisible(true);
+
         	 
          }
       });
@@ -208,9 +211,7 @@ public class PradaProduct2 extends JFrame {
    	 */
    	public int buy(int product_no, int member_no) {
    		int count = 0; // 등록된 레코드 갯수
-   		
-   		product_no = 5;
-   		member_no = 1;
+   		My my;
 
    		try {
    			con = this.dbopen.getConnection();
@@ -219,34 +220,39 @@ public class PradaProduct2 extends JFrame {
    			sql.append(
    					"insert into buy(buy_no, productno, member_no, buy_cnt,buy_date) values (buy_no_seq.nextval, ?, ?, ?,sysdate)");
 
-   			// 각 텍스트필드에 입력된 값을 변수에 저장
-   			String regExp = "^[0-9]+$";
-   			
-   			String CNT = jt.getText().trim();
-   			int cnt = Integer.parseInt(CNT);
+   		// 각 텍스트필드에 입력된 값을 변수에 저장
+            String regExp = "^[0-9]+$";
+            
+            String CNT = jt.getText().trim();
+            int cnt = Integer.parseInt(CNT);
 
-   			pstmt = con.prepareStatement(sql.toString());
-   			pstmt.setInt(1, product_no);
-   			pstmt.setInt(2, member_no);
-   			pstmt.setInt(3, cnt);
-   			
-   			rs = pstmt.executeQuery(); 
-   			
-   			if (CNT == null) {
-   				JOptionPane.showMessageDialog(null, "수량를 입력해주세요");
-   				jt.setText("");
-   			}
-   			if (cnt <= 0) {
-   				JOptionPane.showMessageDialog(null, "주문은 1개이상부터 가능합니다");
-   				jt.setText("0");
-   			}
-   			if (cnt <= 0 || CNT == null || !(CNT.matches(regExp))) {
-   				JOptionPane.showMessageDialog(null, "구매 실패, 다시 시도해 주세요.");
-   			} else {
-   				JOptionPane.showMessageDialog(null, "주문이 완료 되었습니다!", "주문 완료", JOptionPane.INFORMATION_MESSAGE);
-   				jt.setText("");
-   				dispose();
-   			}
+            pstmt = con.prepareStatement(sql.toString());
+            pstmt.setInt(1, product_no);
+            pstmt.setInt(2, member_no);
+            pstmt.setInt(3, cnt);
+            
+            if (CNT == null) {
+                JOptionPane.showMessageDialog(null, "수량를 입력해주세요");
+                jt.setText("");
+                my = new My();
+                my.setVisible(false);
+            }
+            if (cnt <= 0) {
+                JOptionPane.showMessageDialog(null, "주문은 1개이상부터 가능합니다");
+                jt.setText("0");
+                my = new My();
+                my.setVisible(false);
+            }
+            if (cnt <= 0  || CNT == null || !(CNT.matches(regExp))) {
+                JOptionPane.showMessageDialog(null, "구매 실패, 다시 시도해 주세요.");
+            } else {
+                rs = pstmt.executeQuery(); 
+                JOptionPane.showMessageDialog(null, "주문이 완료 되었습니다!", "주문 완료", JOptionPane.INFORMATION_MESSAGE);
+                jt.setText("");
+                my = new My();
+                my.setVisible(true);
+                dispose();
+            }
 
    		} catch (Exception e1) {
    			System.out.println("SQL 문법에 문제가 있는것 같습니다.");

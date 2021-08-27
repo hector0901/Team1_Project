@@ -98,9 +98,9 @@ public class Notice_customer extends JFrame {
    private JLabel LB_Notice_Date = null;
    private JLabel top_label1   = null;
    
-   String Url = "jdbc:oracle:thin:@220.72.27.180:1521:XE"; // URL 정보 저장 변수
+   String Url = "jdbc:oracle:thin:@172.16.14.12:1521:XE"; // URL 정보 저장 변수
    private String user = "sys as sysdba"; // user 정보 저장 변수 -> hr
-   private String password = "1234"; // password 정보 저장 변수 -> hr
+   private String password = "0000"; // password 정보 저장 변수 -> hr
 
    private Connection conn = null;
    private Statement stmt = null;
@@ -166,22 +166,16 @@ public class Notice_customer extends JFrame {
          String notice_title = (String)in.get(2);
          String notice_content = (String)in.get(3);
          String notice_date = (String)in.get(4);
-        
-        
-         
-         
-//         
-//         테이블 셀 간격 조절
+ 
+         // 테이블 셀 간격 조절
          table1.setRowHeight(30);
          table1.getColumn("공지 번호").setPreferredWidth(100);
          table1.getColumn("관리자").setPreferredWidth(100);
          table1.getColumn("제목").setPreferredWidth(200);
          table1.getColumn("내용").setPreferredWidth(800);
          table1.getColumn("등록일자").setPreferredWidth(100);
-         
-         
-         
- //셀 가운데 정렬
+
+         // 셀 가운데 정렬
          DefaultTableCellRenderer dtcr= new DefaultTableCellRenderer();
          dtcr.setHorizontalAlignment(SwingConstants.CENTER);
          TableColumnModel tcm=table1.getColumnModel();
@@ -189,12 +183,6 @@ public class Notice_customer extends JFrame {
             tcm.getColumn(i).setCellRenderer(dtcr);
         }
 
-         
-     
-              
-         
-         
-         
          //  화면에 표시된 각각의 TextField(번호~가입일까지)에 
          //   값 setting
          TF_Notice_No.setText(Integer.toString(notice_no));
@@ -207,39 +195,28 @@ public class Notice_customer extends JFrame {
          TF_Notice_No.setEditable(false);
          TF_Admin_No.setEditable(false);
          TF_Notice_Date.setEditable(false);
-       
-         
-        
-         
-         
-         
-         
+
          }
 
       });
 
       // 화면에 표시될 패널 생성
       JPanel panel = new JPanel();
+      
       // panel.setBackground(Color.white);
-
       // 값을 입력받거나 표시할 텍스트필드(번호, 이름, 주소) 생성 <= 입력받지 않아도 될 변수 제거할것 나중에..
       TF_Notice_No = new JTextField(5);
       TF_Admin_No = new JTextField(8);
       TF_Notice_Title = new JTextField(20);
       TF_Notice_Content = new JTextField(20);
       TF_Notice_Date = new JTextField(10);
-      
-      
-      
-      
+
       TF_Notice_No.setVisible(false);
       TF_Admin_No.setVisible(false);
       TF_Notice_Title.setVisible(false);
       TF_Notice_Content.setVisible(false);
       TF_Notice_Date.setVisible(false);
-      
-      
-      
+
       // 레이블 생성
       LB_Notice_No = new JLabel("공지 번호");
       LB_Admin_No = new JLabel("관리자");
@@ -253,19 +230,13 @@ public class Notice_customer extends JFrame {
       LB_Notice_Title .setVisible(false);
       LB_Notice_Content.setVisible(false);
       LB_Notice_Date.setVisible(false);
-      
-      
-      
-      
-      
-     
+
       LB_Notice_No.setFont(new Font("맑은 고딕 Semilight",Font.PLAIN,13));
       LB_Admin_No.setFont(new Font("맑은 고딕 Semilight",Font.PLAIN,13));
       LB_Notice_Title.setFont(new Font("맑은 고딕 Semilight",Font.PLAIN,13));
       LB_Notice_Content.setFont(new Font("맑은 고딕 Semilight",Font.PLAIN,13));
       LB_Notice_Date.setFont(new Font("맑은 고딕 Semilight",Font.PLAIN,13));
      
-
       // 버튼(추가, 삭제, 수정, 초기화) 생성
       btnAdd1 = new JButton("추가");
       btnDel1 = new JButton("삭제");
@@ -305,8 +276,8 @@ public class Notice_customer extends JFrame {
 
          @Override
          public void actionPerformed(ActionEvent e) {
+           
             // 현재 텍스트 필드에 있는 값을 각각의 변수에 대입 
-            
             int admin_no = Integer.parseInt(TF_Admin_No.getText());
             String notice_title= TF_Notice_Title.getText();
             String notice_content = TF_Notice_Content.getText(); 
@@ -315,7 +286,7 @@ public class Notice_customer extends JFrame {
             // 각각의 변수에 저장된 값을 데이터베이스에 Insert하는 메소드
             insert(admin_no, notice_title, notice_content);
 
-            //   신규 저장된 데이터를 데이터베이스에서 다시 읽어와서 result 벡터에 저장 
+            // 신규 저장된 데이터를 데이터베이스에서 다시 읽어와서 result 벡터에 저장 
             Vector result = selectAll();
            
             // 변경된 데이터(벡터)로 모델 갱신 -> 테이블 표시 갱신됨 
@@ -325,11 +296,8 @@ public class Notice_customer extends JFrame {
 
       });
 
-      
-
       //   삭제 버튼에 이벤트(클릭시) 처리 -> 텍스트 필드에 입력된 번호값으로 데이터베이스에 
       //   해당 번호의 레코드를 삭제(Delete) 하는 영역
-
       btnDel1.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
@@ -337,10 +305,10 @@ public class Notice_customer extends JFrame {
          // 텍스트필드에 있는 번호값 변수에 대입
          int notice_no = Integer.parseInt(TF_Notice_No.getText());
          
-      //   번호값으로 데이터베이스에서 해당 레크드를 삭제하는 메소드
+         // 번호값으로 데이터베이스에서 해당 레크드를 삭제하는 메소드
          delete(notice_no);
          
-         //   삭제처리 데이터를 데이터베이스에서 다시 읽어와서 result 벡터에 저장 
+         // 삭제처리 데이터를 데이터베이스에서 다시 읽어와서 result 벡터에 저장 
          Vector result = selectAll();
          
          // 변경된 데이터(벡터)로 모델 갱신 -> 테이블 표시 갱신됨
@@ -351,8 +319,6 @@ public class Notice_customer extends JFrame {
 
       });
 
-      
-
       // 수정버튼에 이벤트(클릭시) 처리 -> 텍스트 필드에 입력된 번호값으로 데이터베이스에
       // 해당 번호의 레크드를 수정(Update) 하는 영역 
       btnUpdate1.addActionListener(new ActionListener() {
@@ -360,21 +326,18 @@ public class Notice_customer extends JFrame {
          @Override
          public void actionPerformed(ActionEvent e) {
             
-         // 텍스트필드에 있는 값들을 변수에 저장
-            
+            // 텍스트필드에 있는 값들을 변수에 저장
             int notice_no = Integer.parseInt(TF_Notice_No.getText());
             String notice_title = TF_Notice_Title.getText();
             String notice_content = TF_Notice_Content.getText();
 
-
-            //   번호를 기준으로 수정된 이름과 주소를 수정하는 메소드 
+            // 번호를 기준으로 수정된 이름과 주소를 수정하는 메소드 
             update(notice_content, notice_title, notice_no);
             
-            //   삭제처리 데이터를 데이터베이스에서 다시 읽어와서 result 벡터에 저장 
+            // 삭제처리 데이터를 데이터베이스에서 다시 읽어와서 result 벡터에 저장 
             Vector result = selectAll();
             
-            // 변경된 데이터(벡터)로 모델 갱신 -> 테이블 표시 갱신됨
-            
+            // 변경된 데이터(벡터)로 모델 갱신 -> 테이블 표시 갱신됨       
             model1.setDataVector(result, title1);
 
          }
@@ -406,7 +369,6 @@ public class Notice_customer extends JFrame {
          }
 
       });
-
 
       // 패널에 각각의 레이블과 텍스트필드 추가
       panel.add(LB_Notice_No);
@@ -452,12 +414,10 @@ public class Notice_customer extends JFrame {
 
                stmt.close(); // Statement 객체 닫기
                conn.close(); // Connection 객체 닫기
-
                setVisible(false); // 화면 닫기
-
                dispose(); // 자원 반납
 
-            }catch(Exception e){
+            } catch(Exception e) {
 
             }
 
@@ -480,7 +440,7 @@ public class Notice_customer extends JFrame {
 
       try{
 
-         ResultSet rs = stmt.executeQuery("select * from notice order by notice_no");
+         ResultSet rs = stmt.executeQuery("select * from notice order by notice_no desc");
 
          while(rs.next()){
 

@@ -36,7 +36,7 @@ public class GucciProduct extends JFrame {
 
   DecimalFormat df = new DecimalFormat("###,###,###,###,###");
   
-  //DB관련 변수들
+    // DB관련 변수들
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -50,7 +50,7 @@ public class GucciProduct extends JFrame {
 	
 	// 회원번호 1고정, 상품번호는 각 상품마다 1~6으로 따로 지정
 	// 1번 상품
-	int member_no = 1;
+	int member_no = 0;
 	int product_no = 1;
 	
 	JTextField jt=new JTextField(10);//수량 입력필드
@@ -76,6 +76,7 @@ public class GucciProduct extends JFrame {
 		JPanel panel2 = new JPanel();
 		panel2.setBackground(Color.white);
 		panel2.setLayout(null);
+		
 		// 브랜드이름
 		JLabel j1 = new JLabel("GUCCI");
 		j1.setBounds(1200, 50, 400, 90);
@@ -172,11 +173,17 @@ public class GucciProduct extends JFrame {
 	      }
 	      });
 	      
+	      if(member_no == 0) {
+	        jb1.setVisible(false);
+	      }
+	      
 		// 상품구매
 		jb1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-				 buy(product_no, member_no);
+	             buy(product_no, member_no);
+	             My my = new My();
+	             my.setVisible(true);
 			}
 		});
 
@@ -191,12 +198,12 @@ public class GucciProduct extends JFrame {
 		setVisible(true);
 	}
 	
-	 /**
-		 * 주문하기 메소드
-		 * @param product_no
-		 * @param member_no
-		 * @return
-		 */
+	/**
+	* 주문하기 메소드
+	* @param product_no
+	* @param member_no
+	* @return
+	*/
  	public int buy(int product_no, int member_no) {
  		int count = 0; // 등록된 레코드 갯수
  		My my;
@@ -229,7 +236,7 @@ public class GucciProduct extends JFrame {
  				JOptionPane.showMessageDialog(null, "주문은 1개이상부터 가능합니다");
  				jt.setText("0");
  				my = new My();
- 				my.setVisible(false);
+ 				my.setVisible(false); 
  			}
  			if (cnt <= 0  || CNT == null || !(CNT.matches(regExp))) {
  				JOptionPane.showMessageDialog(null, "구매 실패, 다시 시도해 주세요.");

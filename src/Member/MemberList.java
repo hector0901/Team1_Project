@@ -56,7 +56,7 @@ public class MemberList extends JFrame {
 
    /**
    * @변수명 : btnAdd
-  * @설명 : 추가 버튼 객체 변수 선언
+   * @설명 : 추가 버튼 객체 변수 선언
    */
    private JButton btnAdd    = null;
 
@@ -96,9 +96,9 @@ public class MemberList extends JFrame {
    
    private JLabel top_label   = null;
    
-   String Url = "jdbc:oracle:thin:@220.72.27.180:1521:XE"; // URL 정보 저장 변수
+   String Url = "jdbc:oracle:thin:@172.16.14.12:1521:XE"; // URL 정보 저장 변수
    private String user = "sys as sysdba"; // user 정보 저장 변수 -> hr
-   private String password = "1234"; // password 정보 저장 변수 -> hr
+   private String password = "0000"; // password 정보 저장 변수 -> hr
 
    private Connection conn       = null;
    private Statement stmt         = null;
@@ -106,10 +106,9 @@ public class MemberList extends JFrame {
    private PreparedStatement pstmtDel    = null;
    private PreparedStatement pstmtUpdate = null;
 
-   /**
+    /**
     * @생성자명 : JdbcVectorTableEvnetSample
-    * @설명 : Frame 초기화, 패널 생성, 테이블 생성, 모델 생성, 화면에 필요한 컴포넌트 생성 및 
-    *        초기화 
+    * @설명 : Frame 초기화, 패널 생성, 테이블 생성, 모델 생성, 화면에 필요한 컴포넌트 생성 및 초기화 
     */
    public MemberList() {
 
@@ -225,8 +224,7 @@ public class MemberList extends JFrame {
       btnDel = new JButton("삭제");
       btnUpdate = new JButton("수정");
       btnClear = new JButton("초기화");
-      
-      
+           
       btnAdd.setBackground(Color.black);
       btnAdd.setForeground(Color.white);
       btnAdd.setFont(new Font("Nixie One",Font.BOLD, 15));
@@ -243,13 +241,12 @@ public class MemberList extends JFrame {
       btnClear.setForeground(Color.white);
       btnClear.setFont(new Font("Nixie One",Font.BOLD,15));
 
-      //   추가버튼에 이벤트(클릭시) 처리 -> 텍스트필드에 입력된 정보를 데이터베이스에 
-      //   저장(Insert)하는 영역
+      // 추가버튼에 이벤트(클릭시) 처리 -> 텍스트필드에 입력된 정보를 데이터베이스에 
+      // 저장(Insert)하는 영역
       btnAdd.addActionListener(new ActionListener() {
                
-      //   actionPerformed(ActionEvent e) : 추가 버튼 클릭시 호출될 메소드
-      //   추가버튼을 클릭하면 처리할 내용 작성
-
+         // actionPerformed(ActionEvent e) : 추가 버튼 클릭시 호출될 메소드
+         // 추가버튼을 클릭하면 처리할 내용 작성
          @Override
          public void actionPerformed(ActionEvent e) {
             // 현재 텍스트 필드에 있는 값을 각각의 변수에 대입 
@@ -275,9 +272,8 @@ public class MemberList extends JFrame {
 
       
 
-      //   삭제 버튼에 이벤트(클릭시) 처리 -> 텍스트 필드에 입력된 번호값으로 데이터베이스에 
-      //   해당 번호의 레코드를 삭제(Delete) 하는 영역
-
+      // 삭제 버튼에 이벤트(클릭시) 처리 -> 텍스트 필드에 입력된 번호값으로 데이터베이스에 
+      // 해당 번호의 레코드를 삭제(Delete) 하는 영역
       btnDel.addActionListener(new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent e) {
@@ -285,14 +281,13 @@ public class MemberList extends JFrame {
          // 텍스트필드에 있는 번호값 변수에 대입
          int member_no = Integer.parseInt(TF_Member_NO.getText());
          
-      //   번호값으로 데이터베이스에서 해당 레크드를 삭제하는 메소드
+         // 번호값으로 데이터베이스에서 해당 레크드를 삭제하는 메소드
          delete(member_no);
          
-         //   삭제처리 데이터를 데이터베이스에서 다시 읽어와서 result 벡터에 저장 
+         // 삭제처리 데이터를 데이터베이스에서 다시 읽어와서 result 벡터에 저장 
          Vector result = selectAll();
          
-         // 변경된 데이터(벡터)로 모델 갱신 -> 테이블 표시 갱신됨
-
+            // 변경된 데이터(벡터)로 모델 갱신 -> 테이블 표시 갱신됨
             model.setDataVector(result, title);
 
          }

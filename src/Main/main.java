@@ -109,7 +109,6 @@ public class main extends JFrame {
   Notice_customer notice_customer = new Notice_customer();
   Notice notice_function = new Notice();
   
-
   public main() {
 
     dbopen = new DBOpen();
@@ -128,7 +127,7 @@ public class main extends JFrame {
 
     Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-    Image img = toolkit.getImage("");
+    Image img = toolkit.getImage(".//image//하얀색.png");
 
     setIconImage(img);
 
@@ -192,6 +191,12 @@ public class main extends JFrame {
     login.addMouseListener(new MouseAdapter() {
       public void mouseClicked(MouseEvent e) {
         Container c = loginf.getContentPane();
+        
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+        Image img = toolkit.getImage(".//image//하얀색.png");
+
+        loginf.setIconImage(img);
 
         c.setBackground(Color.white);
 
@@ -213,9 +218,7 @@ public class main extends JFrame {
         JPanel panel1 = new JPanel();
 
         panel1.setLayout(null);
-
         panel1.setBackground(Color.white);
-
         panel1.setBounds(400, 300, 350, 600);
 
         JLabel label = new JLabel("로그인");
@@ -223,9 +226,7 @@ public class main extends JFrame {
         Font font = new Font("맑은 고딕 Semilight", Font.BOLD, 20);
 
         label.setFont(font);
-
         label.setBounds(140, 25, 70, 70);
-
         panel1.add(label);
 
         JLabel idlabel = new JLabel("아이디");
@@ -984,7 +985,7 @@ public class main extends JFrame {
 
   }
 
-  // 2. 회원 로그인
+  //2. 회원 로그인
   public boolean Member_Login(String member_id, String member_passwd) {
     boolean sw = false;
     int member_login_cnt = 0;
@@ -1031,7 +1032,7 @@ public class main extends JFrame {
       sql = new StringBuffer();
       sql.append(" SELECT COUNT(*) as admin_login_cnt");
       sql.append(" FROM admin");
-      sql.append(" WHERE admin_id=? AND admin_passwd=?"); // ?는 변수의 값으로 대체됨
+      sql.append(" WHERE admin_id = ? AND admin_passwd = ?"); // ?는 변수의 값으로 대체됨
 
       pstmt = con.prepareStatement(sql.toString());
       pstmt.setString(1, admin_id);
@@ -1100,7 +1101,7 @@ public class main extends JFrame {
       }
 
       if (!(PHONE.length() == 10 || PHONE.length() == 11)) {
-        JOptionPane.showMessageDialog(null, "전화번호는 10-11자리만 가능합니다");
+        JOptionPane.showMessageDialog(null, "전화번호는 -을 제외하고 10-11자리만 가능합니다 \n예시) 01034377179");
         phonenum.setText("");
       } else if (!(PHONE.matches(regExp))) {
         JOptionPane.showMessageDialog(null, "전화번호는 숫자만 입력할 수 있습니다");
@@ -1146,7 +1147,7 @@ public class main extends JFrame {
 
   }
 
-  /**
+   /**
    * 회원의 이름과 전화번호를 입력하면 ID 와 PW 출력
    * @param member_name
    * @param member_address
@@ -1203,7 +1204,7 @@ public class main extends JFrame {
      
       try {
        con = this.dbopen.getConnection();
-
+       
        sql = new StringBuffer();
        sql.append(" SELECT count(*) as double_id ");
        sql.append(" FROM member");
@@ -1269,8 +1270,6 @@ public class main extends JFrame {
     
     return memberVO;    
   }
-
-  
 
   public static void main(String[] args) {
     new main();
