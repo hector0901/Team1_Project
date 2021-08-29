@@ -65,9 +65,9 @@ public class My extends JFrame {
   private DefaultTableModel model = null;
   private JLabel top_label = null;
 
-  String Url = "jdbc:oracle:thin:@172.16.14.12:1521:XE"; // URL 정보 저장 변수
+  String Url = "jdbc:oracle:thin:@118.32.71.218:1521:XE"; // URL 정보 저장 변수
   private String user = "sys as sysdba"; // user 정보 저장 변수 -> hr
-  private String password = "0000"; // password 정보 저장 변수 -> hr
+  private String password = "1234"; // password 정보 저장 변수 -> hr
 
   private Connection conn = null;
   private Statement stmt = null;

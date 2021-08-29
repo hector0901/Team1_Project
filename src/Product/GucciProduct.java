@@ -40,7 +40,7 @@ public class GucciProduct extends JFrame {
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	StringBuffer sql = null;
+	StringBuffer sql = null; 
 
 	DBOpen dbopen = new DBOpen();
 	DBClose dbclose = new DBClose();

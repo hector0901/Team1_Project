@@ -18,9 +18,9 @@ public class DBOpen {
 
     // Oracle
     String className = "oracle.jdbc.driver.OracleDriver";      // Oracle 연결 Drvier
-    String url = "jdbc:oracle:thin:@172.16.14.12:1521:XE";
+    String url = "jdbc:oracle:thin:@118.32.71.218:1521:XE";
     String user = "sys as sysdba";
-    String password = "0000";
+    String password = "1234";
 
     try {
       Class.forName(className);                               // memory로 클래스를 로딩함, 객체는 생성하지 않음.
